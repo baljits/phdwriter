@@ -1,0 +1,31 @@
+{
+  "name": "code2gether",
+  "version": "0.3.0",
+  "description": "A webapp to collaborate on code in real time",
+  "keywords": ["collaborate", "code", "real-time", "collaborative"],
+  "homepage": "",
+  "author": "Fahim Dalvi <dalvifahim@gmail.com>",
+  "main": "code2gether.js",
+  "bin": {
+    "code2gether": "bin/code2gether"
+  },
+  "dependencies": {
+    "share": "0.6.3",
+    "express": "3.2.4",
+    "ejs": "0.8.4",
+    "connect": "1.9.2",
+    "coffee-script": "1.6.3"
+  },
+  "devDependencies": {
+    "nodeunit": "*"
+  },
+  "engine": "node >= 0.6",
+  "scripts": {
+    "build": "cake build",
+    "test": "nodeunit tests.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/fdalvi/code2gether/"
+  }
+}
