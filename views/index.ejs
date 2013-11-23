@@ -9,27 +9,78 @@
 	<script src="/share/share.js"></script>
 	<script src="/share/ace.js"></script>
 
-	<script src="http://simplewebrtc.com/latest.js"></script> 
+	<!-- Added these at the end so that it can process the elements already created -->
+	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
+	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
 	<script>
-	$(document).ready(function() {
-		var editor = ace.edit("editor");
+		var editor;
+		var codeAreaObject = {}
 
-		sharejs.open('hello', 'text', function (error, doc) {
-			doc.attach_ace(editor);
+		$ = jQuery;
+
+		$(document).ready(function() {
+			editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/latex");
+
+			sharejs.open('hello', 'text', function (error, doc) {
+				doc.attach_ace(editor);
+			});
+
+			/* Got the idea from http://stackoverflow.com/questions/3929781/calling-a-function-in-javascript-without-parentheses/3929877#3929877 */
+			Object.defineProperty(codeAreaObject, 'value', {
+				get: function() {
+					return editor.getValue();
+				},
+				set: function(text) {
+					return editor.setValue(text);
+				}
+			});
+			Object.defineProperty(codeAreaObject, 'selectionStart', {
+				get: function() {
+					return editor.getSession().getDocument().positionToIndex(editor.getSelectionRange().start);
+				},
+				set: undefined
+			});
+			Object.defineProperty(codeAreaObject, 'selectionEnd', {
+				get: function() {
+					return editor.getSession().getDocument().positionToIndex(editor.getSelectionRange().end);
+				},
+				set: undefined
+			});
+			Object.defineProperty(codeAreaObject, 'onDocumentChange', {
+				get: undefined,
+				set: function(doChange) {
+					editor.getSession().on('change', function(e) {
+					    doChange();// e.type, etc
+					});
+				}
+			});
+
+			initJaxEdit();
 		});
-	});
-
 	</script>
 	<style>
-	#editor {
-		width: 200px;
-		height: 100px;
-	}
+		#editor {
+			width: 500px;
+			height: 600px;
+		}
 	</style>
 </head>
 <body>
 	<h1><%= title %></h1>
 	<div id="editor"></div>
 	<a href="/logout">Logout</a>
+	<div id="right">
+		<div id="rtop">
+			<span>Preview</span>
+			<span id="quadview">&#9715;</span>
+		</div>
+		<div id="preview">
+			<div id="showarea"></div>
+		</div>
+		<div id="rbot"></div>
+	</div>
+
+
 </body>
 </html>
