@@ -1,29 +1,32 @@
 
 /**
- * Module dependencies.
- */
+* Module dependencies.
+*/
 
- require('coffee-script');
+require('coffee-script');
 
- var express = require('express')
- , routes = require('./routes')
- , user = require('./routes/user')
- , http = require('http')
- , path = require('path')
- , connect = require('./node_modules/connect')
- , sharejs = require('./node_modules/share');
+var express = require('express')
+, routes = require('./routes')
+, user = require('./routes/user')
+, http = require('http')
+, path = require('path')
+, connect = require('./node_modules/connect')
+, sharejs = require('./node_modules/share');
 
- var passport = require('passport')
- , LocalStrategy = require('passport-local').Strategy
- , authentication = require('./routes/authentication')
- , bcrypt = require('bcrypt');
+/* Authentication Libraries */
+var passport = require('passport')
+, LocalStrategy = require('passport-local').Strategy
+, authentication = require('./routes/authentication')
+, bcrypt = require('bcrypt');
 
- var mongoose = require('mongoose');
- mongoose.connect('mongodb://localhost/phdwriter');
+/* Database initialization */
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/phdwriter');
 
- var User = require('./models/user.js');
+/* Database Models */
+var User = require('./models/user.js');
 
- var app = express();
+var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -70,13 +73,13 @@ passport.use(new LocalStrategy(
 );
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+	done(null, user.id);
 });
- 
+
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
+	User.findById(id, function (err, user) {
+		done(err, user);
+	});
 });
 
 // Setting up routes ala URL's
@@ -84,7 +87,7 @@ app.get('/', authentication.isAuthenticated, routes.index);
 app.get('/login', authentication.login);
 app.get('/logout', authentication.logout);
 app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/login' }));
+	failureRedirect: '/login' }));
 app.post('/register', authentication.register);
 app.get('/users', user.list);
 

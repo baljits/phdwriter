@@ -2,49 +2,58 @@
 <html>
 <head>
 	<title><%= title %></title>
-	<link rel='stylesheet' href='/stylesheets/style.css' />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+	<!-- Bootstrap -->
+	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+	<link rel='stylesheet' href='/local/css/style.css' />
+	<script type="text/javascript" src="local/js/login.js"></script>
 </head>
-<body>
-	<h1><%= title %></h1>
-	<% if (typeof message != 'undefined') { %>
-		<h3><%= message %><h3>
-	<% } %>
-	<form action="/authenticate" method="post">
+<body>	
+	<div class="row col-md-2 col-md-offset-5">
+		<img class="img-rounded logo" src='/local/media/logo.png'/>
+	</div>
+	<div class="row col-md-4 col-md-offset-4">
+		<div id="signInForm">
+			<form  action="/authenticate" method="post">
+				<div>
+					<input type="text" class="form-control" placeholder="Username" name="username"/>
+				</div>
+				<div>
+					<input type="password" class="form-control" placeholder="Password" name="password"/>
+				</div>
+				<div>
+					<input type="submit" class="btn btn-success pull-right" value="Log In"/>
+				</div>
+			</form>
 
-		<div>
-			<label>Username:</label>
-			<input type="text" name="username"/>
+			<button id="signUpButton" class="btn btn-primary pull-right" onclick="showRegistration();">Sign Up</button>
 		</div>
-		<div>
-			<label>Password:</label>
-			<input type="password" name="password"/>
+		<div id="signUpForm" class="conceal">
+			<form action="/register" method="post">
+				<div>
+					<input type="text" class="form-control" placeholder="Full Name" name="fullname"/>
+				</div>
+				<div>
+					<input type="text" class="form-control" placeholder="Email" name="email"/>
+				</div>
+				<div>
+					<input type="text" class="form-control" placeholder="Preferred username" name="username"/>
+				</div>
+				<div>
+					<input type="password" class="form-control" placeholder="Password" name="password"/>
+				</div>
+				<div>
+					<input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"/>
+				</div>
+				<div>
+					<input type="submit" class="btn btn-primary pull-right" value="Register"/>
+				</div>
+			</form>
+			<button id="signInButton" class="btn btn-success pull-right" onclick="hideRegistration();">Sign In</button>
 		</div>
-		<div>
-			<input type="submit" value="Log In"/>
-		</div>
-	</form>
-
-	<form action="/register" method="post">
-		<div>
-			<label>Full Name:</label>
-			<input type="text" name="fullname"/>
-		</div>
-		<div>
-			<label>Email:</label>
-			<input type="text" name="email"/>
-		</div>
-		<div>
-			<label>Username:</label>
-			<input type="text" name="username"/>
-		</div>
-		<div>
-			<label>Password:</label>
-			<input type="password" name="password"/>
-		</div>
-		<div>
-			<input type="submit" value="Register"/>
-		</div>
-	</form>
+	</div>
 </body>
 </html>
