@@ -2,6 +2,78 @@ var http = require('follow-redirects').http;
 
 /* the array which stores the array of 
 all the research papers */
+
+exports.imageListing = function(req, res)
+{
+	var imageListArray = new Array();
+	
+	var imageBody;
+	var options = {
+		headers: {'User-Agent': 'nodejs/0.10.22'},
+		host: 'openclipart.org',
+		path:'/search/json/?query='+ req.param("keyword") +'&page=1&amount=20',
+		port: 80,
+		url: '/listImages',
+		method: 'GET'
+	};
+	/* make request to get the search result 
+	source code */
+	var searchRequest = http.request(options, function(result) {
+		result.on('data', function (chunk) {
+			imageBody+=chunk;
+		});
+
+	/* wait(end event) till the entire source code of the 
+	   search result page has been obtained.
+	   Process the request.
+	   */
+	   result.on('end', function () {
+	   	//	console.log(imageBody);
+	   
+	   		var imageTitleStart = imageBody.indexOf("\"title\" : \"");
+		while(imageTitleStart!=-1)
+		{
+			var imageTitleEnd = imageBody.indexOf("\",", imageTitleStart+11);
+			var imageTitleString = imageBody.substring(imageTitleStart+11, imageTitleEnd);
+
+			var imageLinkStart = imageBody.indexOf("\"detail_link\" : \"")+17;
+			var imageLinkEnd = imageBody.indexOf("\",", imageLinkStart);
+			var imageLinkString = imageBody.substring(imageLinkStart, imageLinkEnd);
+
+			var thumb_png_start = imageBody.indexOf("\"png_thumb\" : \"")+15;
+			var thumb_png_end = imageBody.indexOf("\",", thumb_png_start);
+			var thumb_png_string = imageBody.substring(thumb_png_start, thumb_png_end);
+
+			var full_png_start = imageBody.indexOf("\"png_full_lossy\" : \"")+20;
+			var full_png_end = imageBody.indexOf("}", full_png_start)-2;
+			var full_png_string = imageBody.substring(full_png_start, full_png_end);
+
+			var currentImage = new Array();
+			currentImage[0] = imageTitleString;
+			currentImage[1] = imageLinkString;
+			currentImage[2] = thumb_png_string;
+			currentImage[3] = full_png_string;
+
+			imageListArray.push(currentImage);
+		
+			imageBody = imageBody.substring(full_png_end);
+			imageTitleStart = imageBody.indexOf("\"title\" : \"");
+
+		}
+		res.send({"imageList":JSON.stringify(imageListArray)});
+	   });
+
+	});   
+
+	searchRequest.on('error', function(e) {
+		console.log('Problem with request: ' + e.message);
+	});
+
+	searchRequest.end();
+	
+};
+
+
 var researchPaperArray = new Array();
 
 exports.paperListing = function(req, res)
@@ -98,38 +170,38 @@ var getCitations = function(res, result) {
 					/*	This will be executed multiple times since it 
 						depends on the number of research papers
 						found as search results */
-					var abstractPageRequest = http.request(citationRequest, function(result) {
+						var abstractPageRequest = http.request(citationRequest, function(result) {
 
-						var citationBody = "";
+							var citationBody = "";
 
-						result.setEncoding('utf8');
-						/*get the entire chunk of source code */
-						result.on('data', function (chunk) {
-							citationBody+=chunk; 
-						});
-						/* wait till the entire request is complete */
-						
-						result.on('end', function () {
+							result.setEncoding('utf8');
+							/*get the entire chunk of source code */
+							result.on('data', function (chunk) {
+								citationBody+=chunk; 
+							});
+							/* wait till the entire request is complete */
 
-							/* get the title of the research paper */
-							var titleStart = citationBody.indexOf("<meta name=\"citation_title\" content=\"");
-							
-							if(titleStart!=-1)
-							{
-								
-								/* get the index where the title ends */
-								var titleEnd = citationBody.indexOf("/>", titleStart+36);
-								/* extract the title */
-								var titleString = citationBody.substring(titleStart+37, titleEnd-2);
-								console.log("Title : "+titleString);
+							result.on('end', function () {
+
+								/* get the title of the research paper */
+								var titleStart = citationBody.indexOf("<meta name=\"citation_title\" content=\"");
+
+								if(titleStart!=-1)
+								{
+
+									/* get the index where the title ends */
+									var titleEnd = citationBody.indexOf("/>", titleStart+36);
+									/* extract the title */
+									var titleString = citationBody.substring(titleStart+37, titleEnd-2);
+									console.log("Title : "+titleString);
 								/* array to store the list of authors
 								   for a research paper 
-								*/
-								var authorArray = new Array();
-								var numAuthors = 0;
-								
+								   	*/
+								   var authorArray = new Array();
+								   var numAuthors = 0;
+
 								/* to extract the date; get the start and end
-									index of the date */
+								index of the date */
 								var dateStart = citationBody.indexOf("<meta name=\"citation_date\" content=\"", titleEnd);
 								var dateEnd = citationBody.indexOf("/>",dateStart);
 
@@ -151,8 +223,8 @@ var getCitations = function(res, result) {
 									authorArray[numAuthors++] = authorString;
 									/* shift the source code string; since the author
 									one detail have been extracted */
- 									citationBody = citationBody.substring(authorEnd);
- 									/* get the starting index of the next author meta-tag */
+									citationBody = citationBody.substring(authorEnd);
+									/* get the starting index of the next author meta-tag */
 									authorStart = citationBody.indexOf("<meta name=\"citation_author\" content=\"");
 
 								}		
@@ -167,20 +239,20 @@ var getCitations = function(res, result) {
 
 								/* create a new array for every research paper
 								   search result 
-								*/
-								currentResearchPaper = new Array();
-								currentResearchPaper[0] = titleString;
-								currentResearchPaper[1] = authorArray;
-								currentResearchPaper[2] = dateString;
-								currentResearchPaper[3] = urlString;
+								   */
+								   currentResearchPaper = new Array();
+								   currentResearchPaper[0] = titleString;
+								   currentResearchPaper[1] = authorArray;
+								   currentResearchPaper[2] = dateString;
+								   currentResearchPaper[3] = urlString;
 								/* push the entire current research paper array
 								   to the actual array which stores the research
 								   paper arrays 
-								*/
-								researchPaperArray.push(currentResearchPaper);
+								   */
+								   researchPaperArray.push(currentResearchPaper);
 
-							}
-						});
+								}
+							});
 });
 /* required to end the request */
 abstractPageRequest.end();

@@ -26,7 +26,7 @@ mongoose.connect('mongodb://localhost/phdwriter');
 /* Database Models */
 var User = require('./models/user.js');
 
-var researchPaperListing = require('./routes/paperList');
+var searchResult = require('./routes/mineData');
 
 var app = express();
 
@@ -92,9 +92,8 @@ app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/'
 	failureRedirect: '/login' }));
 app.post('/register', authentication.register);
 app.get('/users', user.list);
-app.get('/listPapers', researchPaperListing.paperListing);
-// app.get('/citePapers', researchPaperListing.paperListing);
-
+app.get('/listPapers', searchResult.paperListing);
+app.get('/listImages', searchResult.imageListing);
 var options = {db: {type: 'none'}}; // See docs for options. {type: 'redis'} to enable persistance.
 
 // Attach the sharejs REST and Socket.io interfaces to the server
