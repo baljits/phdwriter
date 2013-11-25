@@ -2,16 +2,14 @@
 <html>
 <head>
 	<title><%= title %></title>
-	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/local/css/style.css' />
 	<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/channel/bcsocket.js"></script>
 	<script src="/share/share.js"></script>
 	<script src="/share/ace.js"></script>
 
-	<script src="http://simplewebrtc.com/latest.js"></script> 
 	<script>
-
 	function requestPapers()
 	{
 		var keywordSearch = $('#keyword').val();
@@ -28,29 +26,33 @@
 			
 		});
 	}
-
-	$(document).ready(function() {
-		var editor = ace.edit("editor");
-
-		$("textarea")[0].id = "codearea";
-
-		sharejs.open('hello', 'text', function (error, doc) {
-			doc.attach_ace(editor);
-		});
-	});
-
+		var editor;
+		var codeAreaObject = {}
 	</script>
-	<style>
-	#editor {
-		width: 200px;
-		height: 100px;
-	}
-	</style>
+
+	<!-- Added these at the end so that it can process the elements already created -->
+	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
+	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
+	<script type="text/javascript" src="local/js/initAce.js"></script>
+
+	<!-- Bootstrap -->
+	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<h1><%= title %></h1>
-		<div id="editor"></div>
 	<div>Search : </div><textarea id="keyword"></textarea>
 	<input type="button" value="clickMe!" onclick="requestPapers()"></input>
+
+	<div id="editor"></div>
+	<div id="right" class="right">
+		<div id="preview">
+			<div id="showarea"></div>
+		</div>
+		<div id="rbot"></div>
+	</div>
+	<a href="/logout">Logout</a>
+
 </body>
     </html>
