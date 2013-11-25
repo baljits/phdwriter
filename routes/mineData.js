@@ -7,7 +7,7 @@ exports.imageListing = function(req, res)
 {
 	var imageListArray = new Array();
 	
-	var imageBody;
+	var imageBody = '';
 	var options = {
 		headers: {'User-Agent': 'nodejs/0.10.22'},
 		host: 'openclipart.org',
@@ -29,48 +29,48 @@ exports.imageListing = function(req, res)
 	   */
 	   result.on('end', function () {
 	   	//	console.log(imageBody);
-	   
-	   		var imageTitleStart = imageBody.indexOf("\"title\" : \"");
-		while(imageTitleStart!=-1)
-		{
-			var imageTitleEnd = imageBody.indexOf("\",", imageTitleStart+11);
-			var imageTitleString = imageBody.substring(imageTitleStart+11, imageTitleEnd);
 
-			var imageLinkStart = imageBody.indexOf("\"detail_link\" : \"")+17;
-			var imageLinkEnd = imageBody.indexOf("\",", imageLinkStart);
-			var imageLinkString = imageBody.substring(imageLinkStart, imageLinkEnd);
+	   	var imageTitleStart = imageBody.indexOf("\"title\" : \"");
+	   	while(imageTitleStart!=-1)
+	   	{
+	   		var imageTitleEnd = imageBody.indexOf("\",", imageTitleStart+11);
+	   		var imageTitleString = imageBody.substring(imageTitleStart+11, imageTitleEnd);
 
-			var thumb_png_start = imageBody.indexOf("\"png_thumb\" : \"")+15;
-			var thumb_png_end = imageBody.indexOf("\",", thumb_png_start);
-			var thumb_png_string = imageBody.substring(thumb_png_start, thumb_png_end);
+	   		var imageLinkStart = imageBody.indexOf("\"detail_link\" : \"")+17;
+	   		var imageLinkEnd = imageBody.indexOf("\",", imageLinkStart);
+	   		var imageLinkString = imageBody.substring(imageLinkStart, imageLinkEnd);
 
-			var full_png_start = imageBody.indexOf("\"png_full_lossy\" : \"")+20;
-			var full_png_end = imageBody.indexOf("}", full_png_start)-2;
-			var full_png_string = imageBody.substring(full_png_start, full_png_end);
+	   		var thumb_png_start = imageBody.indexOf("\"png_thumb\" : \"")+15;
+	   		var thumb_png_end = imageBody.indexOf("\",", thumb_png_start);
+	   		var thumb_png_string = imageBody.substring(thumb_png_start, thumb_png_end);
 
-			var currentImage = new Array();
-			currentImage[0] = imageTitleString;
-			currentImage[1] = imageLinkString;
-			currentImage[2] = thumb_png_string;
-			currentImage[3] = full_png_string;
+	   		var full_png_start = imageBody.indexOf("\"png_full_lossy\" : \"")+20;
+	   		var full_png_end = imageBody.indexOf("}", full_png_start)-2;
+	   		var full_png_string = imageBody.substring(full_png_start, full_png_end);
 
-			imageListArray.push(currentImage);
-		
-			imageBody = imageBody.substring(full_png_end);
-			imageTitleStart = imageBody.indexOf("\"title\" : \"");
+	   		var currentImage = new Array();
+	   		currentImage[0] = imageTitleString;
+	   		currentImage[1] = imageLinkString;
+	   		currentImage[2] = thumb_png_string;
+	   		currentImage[3] = full_png_string;
 
-		}
-		res.send({"imageList":JSON.stringify(imageListArray)});
+	   		imageListArray.push(currentImage);
+
+	   		imageBody = imageBody.substring(full_png_end);
+	   		imageTitleStart = imageBody.indexOf("\"title\" : \"");
+
+	   	}
+	   	res.send({"imageList":JSON.stringify(imageListArray)});
 	   });
 
-	});   
+});   
 
-	searchRequest.on('error', function(e) {
-		console.log('Problem with request: ' + e.message);
-	});
+searchRequest.on('error', function(e) {
+	console.log('Problem with request: ' + e.message);
+});
 
-	searchRequest.end();
-	
+searchRequest.end();
+
 };
 
 

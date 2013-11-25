@@ -92,8 +92,8 @@ app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/'
 	failureRedirect: '/login' }));
 app.post('/register', authentication.register);
 app.get('/users', user.list);
-app.get('/listPapers', searchResult.paperListing);
-app.get('/listImages', searchResult.imageListing);
+app.post('/listPapers', authentication.isAuthenticated, searchResult.paperListing);
+app.post('/listImages', authentication.isAuthenticated, searchResult.imageListing);
 var options = {db: {type: 'none'}}; // See docs for options. {type: 'redis'} to enable persistance.
 
 // Attach the sharejs REST and Socket.io interfaces to the server

@@ -1,11 +1,12 @@
 function requestPapers()
 {
 	var keywordSearch = $('#keyword').val();
+	keywordSearch = $.trim(keywordSearch);
 	var paperLists = "";
 	console.log(keywordSearch);
 
 	searchRequest = $.ajax({
-		type: "GET",
+		type: "POST",
 		url: "/listPapers",
 		data: {keyword:keywordSearch},
 		cache: false
@@ -17,9 +18,9 @@ function requestPapers()
 function imageResults()
 {
 	var imageKeyword = $('#imageKeyword').val();
-
+	imageKeyword = $.trim(imageKeyword);
 	searchRequest = $.ajax({
-		type: "GET",
+		type: "POST",
 		url: "/listImages",
 		data: {keyword:imageKeyword},
 		cache: false
