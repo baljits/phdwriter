@@ -28,8 +28,6 @@ var User = require('./models/user.js');
 
 var researchPaperListing = require('./routes/paperList');
 
-var researchPaperCiting = require('./routes/citeList');
-
 var app = express();
 
 // all environments

@@ -1,14 +1,14 @@
 {
-  "name": "code2gether",
-  "version": "0.3.0",
-  "description": "A webapp to collaborate on code in real time",
-  "keywords": ["collaborate", "code", "real-time", "collaborative"],
+  "name": "PhDWriter",
+  "version": "0.1.0",
+  "description": "A webapp to collaborate and write research papers online",
+  "keywords": ["collaborate", "research paper", "real-time", "collaborative"],
   "homepage": "",
   "author": "Fahim Dalvi <dalvifahim@gmail.com>",
-  "main": "code2gether.js",
+  "main": "app.js",
   "bin": {
-    "code2gether": "bin/code2gether"
-  },
+    "app": "app.js"
+  }, 
   "dependencies": {
     "share": "0.6.3",
     "express": "3.2.4",

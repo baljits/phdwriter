@@ -10,22 +10,6 @@
 	<script src="/share/ace.js"></script>
 
 	<script>
-	function requestPapers()
-	{
-		var keywordSearch = $('#keyword').val();
-		var paperLists = "";
-		console.log(keywordSearch);
-
-		searchRequest = $.ajax({
-			type: "GET",
-			url: "/listPapers",
-			data: {keyword:keywordSearch},
-			cache: false
-		}).done(function(res){
-			console.log(res);alert("message received : " + res.paperArray);
-			
-		});
-	}
 		var editor;
 		var codeAreaObject = {}
 	</script>
@@ -34,6 +18,7 @@
 	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
 	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
 	<script type="text/javascript" src="local/js/initAce.js"></script>
+	<script type="text/javascript" src="local/js/search.js"></script>
 
 	<!-- Bootstrap -->
 	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
