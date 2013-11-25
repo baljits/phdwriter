@@ -50,7 +50,6 @@ function initJaxEdit() {
 				loginbtn : document.getElementById("loginbtn"),
 				drivesel: document.getElementById("drivesel"),
 				main : document.getElementById("main"),
-				left : document.getElementById("left"),
 				ltop : document.getElementById("ltop"),
 				source : document.getElementById("source"),
 				codearea : codeAreaObject,
@@ -136,7 +135,6 @@ function initJaxEdit() {
 				body = childs.body,
 				head = childs.head,
 				main = childs.main,
-				left = childs.left,
 				ltop = childs.ltop,
 				source = childs.source,
 				codearea = childs.codearea,
@@ -189,7 +187,6 @@ function initJaxEdit() {
 					that.resizeElements(wsizes, hsizes);
 
 					body.style.height = "100%";
-					left.style.display = resizer.style.display = "none";
 					rtop.style.display = rbot.style.display = "none";
 					showarea.style.padding = "50px";
 					body.style.margin = "auto";
@@ -205,11 +202,7 @@ function initJaxEdit() {
 						lHalfWidth = lWrapWidth = Math.ceil(pageWidth / 2) - halfBorder,
 						rHalfWidth = rWrapWidth = Math.floor(pageWidth / 2) - halfBorder;
 					}
-					if (lHalfWidth < 0) {
-						left.style.display = "none"; rHalfWidth = pageWidth - halfBorder - 2;
-					} else {
-						left.style.display = "block";
-					}
+					
 					if (rHalfWidth < 0) {
 						right.style.display = "none"; lHalfWidth = pageWidth - halfBorder - 2;
 					} else {
@@ -217,7 +210,7 @@ function initJaxEdit() {
 					}
 					lWrapHeight = rWrapHeight = wrapHeight;
 
-					wsizes.push([left, lHalfWidth]); hsizes.push([left, halfHeight]);
+					
 					wsizes.push([right, rHalfWidth]); hsizes.push([right, halfHeight]);
 
 					right.style.top = 0 + "px";
@@ -225,7 +218,7 @@ function initJaxEdit() {
 					rtop.style.display = "block"; rbot.style.display = "block";
 
 					hsizes.push([resizer, halfHeight + 4]);
-					resizer.style.left = ((lHalfWidth + 2 < 0) ? 0 : (lHalfWidth + 2)) + "px";
+					
 
 					adjustSize();
 					that.resizeElements(wsizes, hsizes);
@@ -235,7 +228,7 @@ function initJaxEdit() {
 					lWrapWidth = pageWidth - halfBorder; rWrapWidth = pageWidth * 0.382;
 					lWrapHeight = wrapHeight; rWrapHeight = wrapHeight * 0.382;
 
-					wsizes.push([left, lWrapWidth]); hsizes.push([left, halfHeight]);
+					
 					wsizes.push([right, rWrapWidth]); hsizes.push([right, rWrapHeight]);
 
 					right.style.top = (topHeight + halfBorder / 2) + "px";
@@ -318,7 +311,6 @@ function initJaxEdit() {
 			initialize: function() {
 				if (this.hasEditor && this.hasParser) {
 					this.initEditor();
-					this.bindView();
 				}
 			},
 
@@ -412,7 +404,7 @@ function initJaxEdit() {
 			main.onmousemove = function(event) {
 				if (that.forResize) {
 					var ev = event ? event : window.event;
-					resizer.style.left = (ev.clientX - 2) + "px";
+					//resizer.style.left = (ev.clientX - 2) + "px";
 				}
 			};
 
@@ -733,22 +725,6 @@ function initJaxEdit() {
 
 			if (this.fileid > 0) setupFetch();
 			return enableShare;
-		},
-
-		bindView: function() {
-			var that = this;
-			var quad = document.getElementById("quadview"),
-			half = document.getElementById("halfview");
-			function disable() {
-				that.childs.presbtn.style.display = "none";
-			}
-			quad.onclick = function() {
-				disable();
-				that.view = "tiny";
-				that.doResize();
-				half.style.display = "inline";
-				typejax.updater.initMode("tiny");
-			};
 		},
 
 		toggleLoading: function(info) {
