@@ -11,8 +11,28 @@
 
 	<script src="http://simplewebrtc.com/latest.js"></script> 
 	<script>
+
+	function requestPapers()
+	{
+		var keywordSearch = $('#keyword').val();
+		var paperLists = "";
+		console.log(keywordSearch);
+
+		searchRequest = $.ajax({
+			type: "GET",
+			url: "/listPapers",
+			data: {keyword:keywordSearch},
+			cache: false
+		}).done(function(res){
+			console.log(res);alert("message received : " + res.paperArray);
+			
+		});
+	}
+
 	$(document).ready(function() {
 		var editor = ace.edit("editor");
+
+		$("textarea")[0].id = "codearea";
 
 		sharejs.open('hello', 'text', function (error, doc) {
 			doc.attach_ace(editor);
@@ -29,6 +49,8 @@
 </head>
 <body>
 	<h1><%= title %></h1>
-	<div id="editor"></div>
+		<div id="editor"></div>
+	<div>Search : </div><textarea id="keyword"></textarea>
+	<input type="button" value="clickMe!" onclick="requestPapers()"></input>
 </body>
-</html>
+    </html>

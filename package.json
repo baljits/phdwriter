@@ -14,7 +14,8 @@
     "express": "3.2.4",
     "ejs": "0.8.4",
     "connect": "1.9.2",
-    "coffee-script": "1.6.3"
+    "coffee-script": "1.6.3",
+    "follow-redirects": "0.0.3"
   },
   "devDependencies": {
     "nodeunit": "*"

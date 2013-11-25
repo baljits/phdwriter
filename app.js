@@ -13,6 +13,10 @@ var express = require('express')
   , connect = require('./node_modules/connect')
   , sharejs = require('./node_modules/share');
 
+var researchPaperListing = require('./routes/paperList');
+
+var researchPaperCiting = require('./routes/citeList');
+
 var app = express();
 
 // all environments
@@ -35,6 +39,8 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/listPapers', researchPaperListing.paperListing);
+// app.get('/citePapers', researchPaperListing.paperListing);
 
 var options = {db: {type: 'none'}}; // See docs for options. {type: 'redis'} to enable persistance.
 
