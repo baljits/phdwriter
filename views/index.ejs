@@ -8,30 +8,66 @@
 	<script src="/channel/bcsocket.js"></script>
 	<script src="/share/share.js"></script>
 	<script src="/share/ace.js"></script>
+	<link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 	<script>
-		var editor;
-		var codeAreaObject = {}
+	var editor;
+	var codeAreaObject = {}
+
+	                  
 	</script>
 
-	<!-- Added these at the end so that it can process the elements already created -->
-	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
-	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
-	<script type="text/javascript" src="local/js/initAce.js"></script>
-	<script type="text/javascript" src="local/js/search.js"></script>
+</script>
 
-	<!-- Bootstrap -->
-	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
-	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- Added these at the end so that it can process the elements already created -->
+<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
+<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
+<script type="text/javascript" src="local/js/initAce.js"></script>
+<script type="text/javascript" src="local/js/search.js"></script>
+<script type="text/javascript" src="local/js/searchBar.js"></script>
+
+<!-- Bootstrap -->
+<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
 
 </head>
 <body>
 	<h1><%= title %></h1>
-	<div>Search : </div><textarea id="keyword"></textarea>
-	<input type="button" value="clickMe!" onclick="requestPapers()"></input>
+	
+	
+	<!-- <div id="dialog" style="display:none"> -->
+    <div id="openPDF">
+    </div>
+</div> 
+	<div class="searchColumn pull-right">
+		<div class="btn-group">
+			<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
+			<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
+		</div>
 
-	<div>Image Search : </div><textarea id="imageKeyword"></textarea>
-	<input type="button" value="image!" onclick="imageResults()"></input>
+		<div id="article_search">
+			<div class="input-group searchbar">
+				<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
+				<span class="input-group-btn">
+					<button class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
+				</span>
+			</div>
+		</div>
+
+		<div id="image_search" class="conceal">
+			<div class="input-group  searchbar">
+				<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
+				<span class="input-group-btn">
+					<button class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
+				</span>
+			</div>
+		</div>
+		<div class="list-group paperListing">
+			
+		</div>		
+	</div>
 
 	<div id="editor"></div>
 	<div id="right" class="right">
@@ -43,4 +79,4 @@
 	<a href="/logout">Logout</a>
 
 </body>
-    </html>
+</html>

@@ -28,3 +28,11 @@ a {
 .conceal {
 	display: none;
 }
+
+.searchColumn {
+	width:250px;
+}
+
+.ui-dialog-content {
+	width:600px;
+}
