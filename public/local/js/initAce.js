@@ -5,7 +5,7 @@ $(document).ready(function() {
 	editor = ace.edit("editor");
 	editor.getSession().setMode("ace/mode/latex");
 
-	sharejs.open('hello', 'text', function (error, doc) {
+	sharejs.open(documentID, 'text', function (error, doc) {
 		doc.attach_ace(editor);
 	});
 

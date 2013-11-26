@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/local/css/style.css' />
+	<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/channel/bcsocket.js"></script>
+	<script src="/share/share.js"></script>
+	<script src="/share/ace.js"></script>
+
+	<script>
+		var documentID = '<%= documentID %>';
+		var editor;
+		var codeAreaObject = {}
+	</script>
+
+	<!-- Added these at the end so that it can process the elements already created -->
+	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
+	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
+	<script type="text/javascript" src="local/js/initAce.js"></script>
+	<script type="text/javascript" src="local/js/search.js"></script>
+
+	<!-- Bootstrap -->
+	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<h1><%= title %></h1>
+	<div>Search : </div><textarea id="keyword"></textarea>
+	<input type="button" value="clickMe!" onclick="requestPapers()"></input>
+
+	<div>Image Search : </div><textarea id="imageKeyword"></textarea>
+	<input type="button" value="image!" onclick="imageResults()"></input>
+
+	<div id="editor"></div>
+	<div id="right" class="right">
+		<div id="preview">
+			<div id="showarea"></div>
+		</div>
+		<div id="rbot"></div>
+	</div>
+	<a href="/logout">Logout</a>
+
+</body>
+</html>

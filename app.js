@@ -25,7 +25,7 @@ mongoose.connect('mongodb://localhost/phdwriter');
 
 /* Database Models */
 var User = require('./models/user.js');
-
+var Project = require('./models/project.js');
 var searchResult = require('./routes/mineData');
 
 var app = express();
@@ -85,15 +85,27 @@ passport.deserializeUser(function(id, done) {
 });
 
 // Setting up routes ala URL's
-app.get('/', authentication.isAuthenticated, routes.index);
+/* Authentication Routes */
 app.get('/login', authentication.login);
 app.get('/logout', authentication.logout);
-app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/',
-	failureRedirect: '/login' }));
+app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/', failureRedirect: '/login' }));
 app.post('/register', authentication.register);
+
+/* Data Mining Routes */
 app.get('/users', user.list);
 app.post('/listPapers', authentication.isAuthenticated, searchResult.paperListing);
 app.post('/listImages', authentication.isAuthenticated, searchResult.imageListing);
+
+/* Project Routes */
+app.get('/', authentication.isAuthenticated, routes.index);
+app.get('/project', authentication.isAuthenticated, routes.getDocument);
+app.post('/addProject', authentication.isAuthenticated, routes.addProject);
+app.get('/document', authentication.isAuthenticated, routes.getDocument);
+
+/* User management */
+app.post('/getUsername', authentication.isAuthenticated, user.getUsername);
+
+/* Launching Server */
 var options = {db: {type: 'none'}}; // See docs for options. {type: 'redis'} to enable persistance.
 
 // Attach the sharejs REST and Socket.io interfaces to the server
