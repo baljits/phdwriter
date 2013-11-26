@@ -6,7 +6,8 @@ var userSchema = new Schema({
 	name: String,
 	username: String,
 	email: String,
-	hash: String
+	hash: String,
+	projects: [Schema.Types.ObjectId]
 });
 
 module.exports = mongoose.model('User', userSchema);

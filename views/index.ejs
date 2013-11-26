@@ -10,6 +10,8 @@
 </head>
 <body>
 	<h1><%= title %></h1>
+	<h3>Welcome, <%= user %></h3>
+	<a href="/logout">Logout</a>
 	<% for(var i=(projects.length-1); i>=0; i--) { %>
 	<div>
 		<a href="/document?id=<%=projects[i].id %>">Project ID: <%= projects[i].id %></a>
@@ -24,7 +26,7 @@
 				<input type="text" class="form-control" placeholder="Title" name="title"/>
 			</div>
 			<div>
-				<input type="text" class="form-control" placeholder="Collaborators" name="collaborators"/>
+				<input type="text" class="form-control" placeholder="Collaborators (Seperated by commas)" name="collaborators"/>
 			</div>
 			<div>
 					<input type="submit" class="btn btn-success pull-right" value="Add Project"/>
