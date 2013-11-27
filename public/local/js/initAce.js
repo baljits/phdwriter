@@ -2,8 +2,13 @@
 $ = jQuery;
 
 $(document).ready(function() {
+
+	rightSlider();
+	leftSlider();
+
 	editor = ace.edit("editor");
 	editor.getSession().setMode("ace/mode/latex");
+
 
 	sharejs.open(documentID, 'text', function (error, doc) {
 		doc.attach_ace(editor);
