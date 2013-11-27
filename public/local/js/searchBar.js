@@ -6,6 +6,7 @@ function hideImageSearch()
 	$('#imageButton').removeClass("active");
 	$('#article_search').show();
 	$('#articleButton').addClass("active");
+	$('.searchResultList').children().remove();
 }
 
 function hideArticleSearch()
@@ -14,4 +15,5 @@ function hideArticleSearch()
 	$('#articleButton').removeClass("active");
 	$('#image_search').show();
 	$('#imageButton').addClass("active");
+	$('.searchResultList').children().remove();
 }
