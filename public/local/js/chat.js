@@ -14,6 +14,7 @@ function sendChatMessage()
 		}).done(function(res){
 			$("#chatInput").val('');
 			$("#chatHistory").append('<div>'+res.username+': '+ res.message+'</div>');
+			$("#chatHistory")[0].scrollTop = $("#chatHistory")[0].scrollHeight;
 		});
 	}
 }
@@ -30,6 +31,7 @@ function getChatHistory()
 		if(res.error == 'No error')
 			for(var i=0; i<res.chatHistory.length; i++)
 				$("#chatHistory").append('<div>'+res.chatHistory[i].sourceName+': '+ res.chatHistory[i].text+'</div>');
+			$("#chatHistory")[0].scrollTop = $("#chatHistory")[0].scrollHeight;
 			setTimeout(getChatHistory, 1000);
 		});
 }

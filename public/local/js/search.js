@@ -8,16 +8,17 @@ function rightSlider()
 		$('#btntxt2').text("");
 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
 		$('#keyword').focus();
+		$('.right').animate({opacity: 0.3});
 		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
-		$('.right').css("opacity", "1");
 	}
 	else
 	{
 		$('#buttonright').animate({marginLeft: "200px"});
 		$('#btntxt2').text(" Search");
 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
-		$('#rightColumn').css("background-color", "transparent");
-		$('.right').css("opacity", "1");
+		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
+			$('.right').animate({opacity: 1});
+        });	
 	}
 }
 
@@ -30,10 +31,8 @@ function leftSlider()
 		$('#buttonleft').animate({marginLeft: "210px"});
 		$('#btntxt1').text("");
 		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-left');
-		//$('#editor').css("opacity", "0.3");
 		$('#editor').animate({opacity: 0.3});
-		$('#leftColumn').animate({ backgroundColor: '#C0C0C0'}, function(){
-        });
+		$('#leftColumn').animate({ backgroundColor: '#C0C0C0'});
 	}
 	else
 	{
@@ -150,6 +149,8 @@ function viewModal(event)
 
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").removeAttr("style");
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"height": "auto", "width": "520px", "top": "105px", "left": "300px", "display": "block"});
+	$(".ui-dialog-titlebar-close").html('<span class="glyphicon glyphicon-remove"></span>');
+	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
 }
 
 

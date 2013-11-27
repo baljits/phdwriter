@@ -17,3 +17,16 @@ function hideArticleSearch()
 	$('#imageButton').addClass("active");
 	$('.searchResultList').children().remove();
 }
+
+$(document).ready(function() {
+	$("#keyword").keyup(function(event){
+		if(event.keyCode == 13){
+			$("#paperSearchButton").click();
+		}
+	});
+	$("#imageKeyword").keyup(function(event){
+		if(event.keyCode == 13){
+			$("#imageSearchButton").click();
+		}
+	});
+});
