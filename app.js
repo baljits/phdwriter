@@ -8,6 +8,7 @@ require('coffee-script');
 var express = require('express')
 , routes = require('./routes')
 , user = require('./routes/user')
+, chat = require('./routes/chat')
 , http = require('http')
 , path = require('path')
 , connect = require('./node_modules/connect')
@@ -105,6 +106,12 @@ app.get('/document', authentication.isAuthenticated, routes.getDocument);
 
 /* User management */
 app.post('/getUsername', authentication.isAuthenticated, user.getUsername);
+
+/* Chat routes */
+app.post('/addChatMessage', authentication.isAuthenticated, chat.addChatMessage);
+app.post('/getHistory', authentication.isAuthenticated, chat.getChatHistory);
+
+
 
 /* Launching Server */
 var options = {db: {type: 'none'}}; // See docs for options. {type: 'redis'} to enable persistance.

@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="local/js/initAce.js"></script>
 	<script type="text/javascript" src="local/js/search.js"></script>
 	<script type="text/javascript" src="local/js/searchBar.js"></script>
+	<script type="text/javascript" src="local/js/chat.js"></script>
 
 	<!-- Bootstrap -->
 	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
@@ -91,6 +92,15 @@
 
 			<div id="logout"><a href="/logout">Logout</a></div>
 		</div>
+	</div>
+
+
+
+	<div>
+		<div id='chatHistory'>
+		</div>
+		<input type="text" class="form-control" placeholder="Type your message" id="chatInput"></input>
+		<button id='chatSend' class="btn btn-primary" type="button" onclick="sendChatMessage()">Send</button>
 	</div>
 
 </body>
