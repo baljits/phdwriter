@@ -199,6 +199,7 @@ var getCitations = function(res, result) {
 								   	*/
 								   var authorArray = new Array();
 								   var numAuthors = 0;
+								   var finalAuthorArray = new Array();
 
 								/* to extract the date; get the start and end
 								index of the date */
@@ -220,13 +221,13 @@ var getCitations = function(res, result) {
 									var authorString = citationBody.substring(authorStart+38, authorEnd-2);
 									/* store the authors in a string */
 									console.log("Author : "+authorString);
+
 									authorArray[numAuthors++] = authorString;
 									/* shift the source code string; since the author
 									one detail have been extracted */
 									citationBody = citationBody.substring(authorEnd);
 									/* get the starting index of the next author meta-tag */
 									authorStart = citationBody.indexOf("<meta name=\"citation_author\" content=\"");
-
 								}		
 								/* extract url using the starting and the ending index */
 								var urlStart = citationBody.indexOf("<meta name=\"citation_pdf_url\" content=\"");
@@ -235,6 +236,51 @@ var getCitations = function(res, result) {
 								var urlString = citationBody.substring(urlStart+39, urlEnd-2);
 
 								console.log("URL : " +urlString + ' ' + urlStart + ' ' + urlEnd);
+
+								var citation = "";
+
+								for(var p = 0; p < authorArray.length; p++)
+								{
+									var commaCheck = authorArray[p].indexOf(',');
+
+									if(commaCheck != 0)
+									{
+										finalAuthorArray[p] = authorArray[p];
+									}
+									if(commaCheck != -1)
+									{
+										var secondpart = authorArray[p].substring(commaCheck+1, authorArray[p].length);
+										var firstpart = authorArray[p].substring(0, commaCheck);
+
+										authorArray[p] = firstpart + ' ';
+
+										for(var q = 0; q < secondpart.length; q++)
+										{
+											if(secondpart[q] == ' ')
+											{
+												if(q != secondpart.length)
+												{
+													authorArray[p] += secondpart[q+1];
+													authorArray[p] += '. ';
+												}
+											}
+										}
+										authorArray[p] = authorArray[p].substring(0,authorArray[p].length-1);
+										authorArray[p] += ', '
+
+										finalAuthorArray[p] = secondpart + ' ' + firstpart;
+									}
+
+									citation += authorArray[p];
+								}
+								citation = citation.substring(0, citation.length-2);
+
+								dateString = dateString.substring(0, 4);
+
+								citation += " (" + dateString + "). " + titleString + '.';
+								citation += " Retrieved from " + urlString;
+
+								console.log("Citation: " + citation);
 								console.log("\n");
 
 								/* create a new array for every research paper
@@ -242,9 +288,10 @@ var getCitations = function(res, result) {
 								   */
 								   currentResearchPaper = new Array();
 								   currentResearchPaper[0] = titleString;
-								   currentResearchPaper[1] = authorArray;
+								   currentResearchPaper[1] = finalAuthorArray;
 								   currentResearchPaper[2] = dateString;
 								   currentResearchPaper[3] = urlString;
+								   currentResearchPaper[4] = citation;
 								/* push the entire current research paper array
 								   to the actual array which stores the research
 								   paper arrays 

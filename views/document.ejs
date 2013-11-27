@@ -28,7 +28,6 @@
 	<!-- Bootstrap -->
 	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
 	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 	<h1><%= title %></h1>
@@ -38,42 +37,62 @@
 	<div id="openPDF">
 	</div>
 	<!-- </div>  -->
-	<div class="searchColumn pull-right">
-		<div class="btn-group">
-			<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
-			<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
-		</div>
-
-		<div id="article_search">
-			<div class="input-group searchbar">
-				<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
-				<span class="input-group-btn">
-					<button class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
-				</span>
-			</div>
-		</div>
-
-		<div id="image_search" class="conceal">
-			<div class="input-group  searchbar">
-				<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
-				<span class="input-group-btn">
-					<button class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
-				</span>
-			</div>
-		</div>
-		<div class="list-group paperListing">
-			
-		</div>		
-	</div>
 
 	<div id="editor"></div>
+	<div class="pull-left" id="leftColumn">
+		<button type="button" class="btn btn-default" id="buttonleft" onclick="leftSlider()">
+			<div id="btntxt1"></div>
+	 		<span class="glyphicon glyphicon-chevron-left" id="buttonleftspan"></span>
+		</button>
+		<div class="libraryColumn">
+		</div>
+	</div>
+
 	<div id="right" class="right">
 		<div id="preview">
 			<div id="showarea"></div>
 		</div>
 		<div id="rbot"></div>
 	</div>
-	<a href="/logout">Logout</a>
+
+	<div class="searchColumn pull-right">
+
+		<div id="rightColumn">
+			<button type="button" class="btn btn-default" id="buttonright" onclick="rightSlider()">
+		 		<span class="glyphicon glyphicon-chevron-right" id="buttonrightspan"></span>
+		 		<div id="btntxt2"></div>
+			</button>
+
+			<div id="rightToggle">
+				<div class="btn-group">
+					<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
+					<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
+				</div>
+
+				<div id="article_search">
+					<div class="input-group searchbar">
+						<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
+						<span class="input-group-btn">
+							<button class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
+						</span>
+					</div>
+				</div>
+
+				<div id="image_search" class="conceal">
+					<div class="input-group  searchbar">
+						<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
+						<span class="input-group-btn">
+							<button class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
+						</span>
+					</div>
+				</div>
+				<div class="list-group paperListing">
+				</div>
+			</div>		
+
+			<div id="logout"><a href="/logout">Logout</a></div>
+		</div>
+	</div>
 
 
 
