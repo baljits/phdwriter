@@ -78,10 +78,14 @@ var researchPaperArray = new Array();
 
 exports.paperListing = function(req, res)
 {
+	var keyword = req.param("keyword");
+	if(keyword.indexOf("+")!=-1)
+		keyword = 'AND+' + keyword;
+	
 	var options = {
 		headers: {'User-Agent': 'nodejs/0.10.22'},
 		host: 'arxiv.org',
-		path:'/find/all/1/all:+' + req.param("keyword") +'/0/1/0/all/0/1',
+		path:'/find/all/1/all:+' + keyword +'/0/1/0/all/0/1',
 		port: 80,
 		url: '/listPapers',
 		method: 'GET'
