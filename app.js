@@ -90,6 +90,7 @@ app.get('/login', authentication.login);
 app.get('/logout', authentication.logout);
 app.post('/authenticate', passport.authenticate('local',  { successRedirect: '/', failureRedirect: '/login' }));
 app.post('/register', authentication.register);
+app.get('/error', routes.renderError);
 
 /* Data Mining Routes */
 app.get('/users', user.list);

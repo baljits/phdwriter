@@ -32,7 +32,8 @@ exports.register = function(req, res){
 				, username: req.body.username 
 				, name: req.body.fullname
 				, email: req.body.email
-				, hash: passwordHash});
+				, hash: passwordHash
+				,projects: []});
 
 			console.log("Adding user " + req.body.username);
 			user.save(function(err) {
