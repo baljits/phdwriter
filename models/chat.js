@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 
 var chatSchema = new Schema({
 	sourceUser: Schema.Types.ObjectId,
+	sourceName: String,
 	text: String,
 	timestamp: Date
 });

@@ -10,7 +10,7 @@ var projectSchema = new Schema({
 	collaborators: [Schema.Types.ObjectId],
 	citations: [String],
 	images: [String],
-	chatHistory: [Chat]
+	chatHistory: [mongoose.model('Chat').schema]
 });
 
 module.exports = mongoose.model('Project', projectSchema);
