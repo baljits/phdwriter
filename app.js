@@ -26,7 +26,7 @@ mongoose.connect('mongodb://localhost/phdwriter');
 
 /* Database Models */
 var User = require('./models/user.js');
-var Project = require('./models/project.js');
+var Library = require('./models/library.js');
 var searchResult = require('./routes/mineData');
 
 var app = express();

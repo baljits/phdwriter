@@ -1,4 +1,4 @@
-var Project = require('../models/project.js');
+var Library = require('../models/library.js');
 var User = require('../models/user.js');
 var Chat = require('../models/chat.js')
 var mongoose = require('mongoose');
@@ -11,7 +11,7 @@ exports.getChatHistory = function(req, res){
 	var documentID = req.param("documentID");
 	var currentUser = req.user;
 
-	Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
+	Library.Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)
@@ -36,7 +36,7 @@ exports.addChatMessage = function(req, res){
 	var currentUser = req.user;
 	var chatMessage = req.param("message");
 
-	Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
+	Library.Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)

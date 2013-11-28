@@ -1,13 +1,13 @@
 /*
 * GET home page.
 */
-var Project = require('../models/project.js');
+var Library = require('../models/library.js');
 var User = require('../models/user.js');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 exports.index = function(req, res){
-	Project.find({'_id': { $in : req.user.projects}}, function(err, projects) {
+	Library.Project.find({'_id': { $in : req.user.projects}}, function(err, projects) {
 		// User.findOne({'_id':ObjectId(projects[i].collaborators[j])}, function(err, user){
 		// 			collaborators[i].push(user);
 		// 		});
@@ -18,7 +18,7 @@ exports.index = function(req, res){
 
 exports.getDocument = function(req, res){
 	console.log("Requesting for " + req.query.id);
-	Project.findOne({'_id':ObjectId(req.query.id)}, function(err, project) {
+	Library.Project.findOne({'_id':ObjectId(req.query.id)}, function(err, project) {
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)
@@ -54,7 +54,7 @@ exports.addProject = function(req, res){
 		console.log("Logged in user " + req.user);
 		console.log("Collaborators " + collaboratorsArray);
 
-		var newProject = new Project({
+		var newProject = new Library.Project({
 			title: title
 			, creationDate: new Date()
 			, collaborators: collaboratorsArray
