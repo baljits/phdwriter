@@ -40,7 +40,7 @@ function leftSlider()
 		$('#btntxt1').text("Project ");
 		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-right');
 		$('#leftColumn').animate({ backgroundColor: '#FFFFFF'}, function(){
-			$('#editor').animate({opacity: 1});
+		$('#editor').animate({opacity: 1});
         });
 	}
 }
@@ -89,7 +89,7 @@ function requestPapers()
 			$('.searchResultList').append('<button type="button" class="btn btn-success btn-sm viewButton">View</button>');
 			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Cite</button>');
-			$('.searchResultList').children(':last-child').click({paperCitation: researchPaperList[index][4]}, citation);
+			$('.searchResultList').children(':last-child').click({paperCitation: researchPaperList[index][4], title: researchPaperList[index][0], author: researchPaperList[index][1], url:researchPaperList[index][3], date:researchPaperList[index][2]}, citation);
 		}
 	});
 }
@@ -129,6 +129,10 @@ function imageResults()
 			$('.searchResultList').append('<div class="list-group-item">\
 				<img class=\"thumbnail\" src=\"'+imageSearchList[index][2]+'\"></img>\
 				</div>');
+
+			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Add</button>');
+			$('.searchResultList').children(':last-child').click({title:imageSearchList[index][0], thumbUrl:imageSearchList[index][2], fullUrl: imageSearchList[index][3]}, imageAdd);
+
 		}
 	});
 
@@ -153,8 +157,25 @@ function viewModal(event)
 	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
 }
 
+function imageAdd(event)
+{
+	$.ajax({
+		type:'POST',
+		url:'/addImageLib',
+		data:{documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
+	}).done(function(res){console.log("Stored all images")});
+
+}
 
 function citation(event)
 {
 	var paperCitation = event.data.paperCitation;
+
+	$.ajax({
+		type:'POST',
+		url:'/addPaperLib',
+		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
+	}).done(function(res){console.log("Stored everything")});
+
+	//console.log(event.data.date + " " + event.data.title);
 }

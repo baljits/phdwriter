@@ -28,6 +28,7 @@ mongoose.connect('mongodb://localhost/phdwriter');
 var User = require('./models/user.js');
 var Library = require('./models/library.js');
 var searchResult = require('./routes/mineData');
+var libraryAdd = require('./routes/addToLibrary.js');
 
 var app = express();
 
@@ -104,6 +105,8 @@ app.get('/project', authentication.isAuthenticated, routes.getDocument);
 app.post('/addProject', authentication.isAuthenticated, routes.addProject);
 app.get('/document', authentication.isAuthenticated, routes.getDocument);
 
+app.post('/addPaperLib', authentication.isAuthenticated, libraryAdd.addingPaper);
+app.post('/addImageLib', authentication.isAuthenticated, libraryAdd.addingImage);
 /* User management */
 app.post('/getUsername', authentication.isAuthenticated, user.getUsername);
 
