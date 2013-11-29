@@ -12,9 +12,9 @@
 	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	
 	<script>
-	var documentID = '<%= documentID %>';
-	var editor;
-	var codeAreaObject = {}
+		var documentID = '<%= documentID %>';
+		var editor;
+		var codeAreaObject = {}
 	</script>
 
 	<!-- Added these at the end so that it can process the elements already created -->
@@ -30,62 +30,77 @@
 	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1><%= title %></h1>
+	<!-- <h1><%= title %></h1> -->
 
-	
-	<!-- <div id="dialog" style="display:none"> -->
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">PhDWriter</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Projects</a></li>
+				<li onclick="leftSlider()"><a>Library</a></li>
+			</ul>
+			<ul id='logoutButton' class="nav navbar-nav navbar-right">
+				<li><a href="/logout">Sign Out</a></li>
+			</ul>
+			<div class="navbar-form form-inline">
+				<div class="searchBar input-group pull-right">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Articles<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li onclick='hideImageSearch();'><a href="#">Articles</a></li>
+							<li onclick='hideArticleSearch();'><a href="#">Images</a></li>
+						</ul>
+					</div>
+					<input id="searchInput" type="text" class="form-control" placeholder="Search">
+					<div class="input-group-btn">
+						<button id="searchButton" onclick="performSearch();" class="btn pull-right"><span class="glyphicon glyphicon-search"></span></button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
+
 	<div id="openPDF">
 	</div>
-	<!-- </div>  -->
+	<div class="row">
+		<div class="col-md-6">
+			<div id="editor"></div>
+		</div>
 
-	<div id="editor"></div>
-	<div class="pull-left" id="leftColumn">
-		<button type="button" class="btn btn-default" id="buttonleft" onclick="leftSlider()">
-			<div id="btntxt1"></div>
-			<span class="glyphicon glyphicon-chevron-left" id="buttonleftspan"></span>
+		<div class="col-md-6">
+			<div id="right" class="right">
+				<div id="preview">
+					<div id="showarea"></div>
+				</div>
+				<div id="rbot"></div>
+			</div>
+		</div>
+	</div>
+	<div class="libraryColumn">
+		<button type="button" class="btn btn-default pull-right" onclick="leftSlider()">
+			<span class="glyphicon glyphicon-chevron-left"></span>
 		</button>
-		<div class="libraryColumn">
-		</div>
 	</div>
 
-	<div id="right" class="right">
-		<div id="preview">
-			<div id="showarea"></div>
-		</div>
-		<div id="rbot"></div>
-	</div>
-
-	<div class="searchColumn pull-right">
-
+	<div class="searchColumn">
 		<div id="rightColumn">
-			<button type="button" class="btn btn-default" id="buttonright" onclick="rightSlider()">
-				<span class="glyphicon glyphicon-chevron-right" id="buttonrightspan"></span>
-				<div id="btntxt2"></div>
+			<button type="button" class="btn btn-default pull-left" onclick="rightSlider()">
+				<span class="glyphicon glyphicon-chevron-right"></span>
 			</button>
 
 			<div id="rightToggle">
-				<div class="btn-group">
-					<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
-					<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
-				</div>
-
-				<div id="article_search">
-					<div class="input-group searchbar">
-						<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
-						<span class="input-group-btn">
-							<button id="paperSearchButton" class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
-						</span>
-					</div>
-				</div>
-
-				<div id="image_search" class="conceal">
-					<div class="input-group  searchbar">
-						<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
-						<span class="input-group-btn">
-							<button id="imageSearchButton" class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
-						</span>
-					</div>
-				</div>
 				<div class="list-group searchResultList">
 				</div>
 
@@ -96,8 +111,6 @@
 					<button id='chatSend' class="btn btn-primary" type="button" onclick="sendChatMessage()">Send</button>
 				</div>
 			</div>		
-
-			<div id="logout"><a href="/logout">Logout</a></div>
 		</div>
 	</div>
 

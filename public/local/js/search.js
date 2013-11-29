@@ -1,53 +1,61 @@
 function rightSlider()
 {
-	$('#rightToggle').toggle('blind', {direction: right});
+	if($('.searchColumn').attr('style') == undefined)
+		$('.searchColumn').attr('style', '');
 	
-	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
+	if($('.searchColumn').attr('style').indexOf('display: none;') != -1)
 	{
-		$('#buttonright').animate({marginLeft: "0px"});
-		$('#btntxt2').text("");
-		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
-		$('#keyword').focus();
+		$('.searchColumn').toggle('slide',{direction: 'right'})
 		$('.right').animate({opacity: 0.3});
-		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
 	}
 	else
 	{
-		$('#buttonright').animate({marginLeft: "200px"});
-		$('#btntxt2').text(" Search");
-		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
-		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
-			$('.right').animate({opacity: 1});
-        });	
+		$('.searchColumn').toggle('slide',{direction: 'right'})
+		$('.right').animate({opacity: 1});
 	}
+
+// 	$('#rightToggle').toggle('blind', {direction: right});
+	
+// 	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
+// 	{
+// 		$('#buttonright').animate({marginLeft: "0px"});
+// 		$('#btntxt2').text("");
+// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
+// 		$('#keyword').focus();
+// 		$('.right').animate({opacity: 0.3});
+// 		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
+// 	}
+// 	else
+// 	{
+// 		$('#buttonright').animate({marginLeft: "200px"});
+// 		$('#btntxt2').text(" Search");
+// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
+// 		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
+// 			$('.right').animate({opacity: 1});
+//         });	
+// 	}
 }
 
 function leftSlider()
 {
-	$('.libraryColumn').toggle('slide');
+	if($('.libraryColumn').attr('style') == undefined)
+		$('.libraryColumn').attr('style', '');
 	
-	if($("#buttonleftspan").attr('class') == 'glyphicon glyphicon-chevron-right')
+	if($('.libraryColumn').attr('style').indexOf('display: none;') != -1)
 	{
-		$('#buttonleft').animate({marginLeft: "210px"});
-		$('#btntxt1').text("");
-		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-left');
+		$('.libraryColumn').toggle('slide');
 		$('#editor').animate({opacity: 0.3});
-		$('#leftColumn').animate({ backgroundColor: '#C0C0C0'});
 	}
 	else
 	{
-		$('#buttonleft').animate({marginLeft: "0px"});
-		$('#btntxt1').text("Project ");
-		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-right');
-		$('#leftColumn').animate({ backgroundColor: '#FFFFFF'}, function(){
-			$('#editor').animate({opacity: 1});
-        });
+		$('.libraryColumn').toggle('slide');
+		$('#editor').animate({opacity: 1});
 	}
 }
 
 function requestPapers()
 {
-	var keywordSearch = $('#keyword').val();
+	var keywordSearch = $('#searchInput').val();
 	keywordSearch = $.trim(keywordSearch);
 	var tempString = "";
 
@@ -97,7 +105,7 @@ function requestPapers()
 
 function imageResults()
 {
-	var imageKeyword = $('#imageKeyword').val();
+	var imageKeyword = $('#searchInput').val();
 	imageKeyword = $.trim(imageKeyword);
 
 	var tempString = "";
