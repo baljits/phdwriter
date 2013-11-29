@@ -45,6 +45,48 @@ function leftSlider()
 	}
 }
 
+function citationAdd(citationString)
+{
+	var charspace = 50;
+	var newCitation = "";
+	var nextIndex = 0;
+	var sizeOfword = 0;
+	var buffer = 0;
+
+	for(var i=0; i<citationString.length; i++)
+	{
+		nextIndex = citationString.indexOf(" ", i);
+		if(nextIndex != -1)
+		{
+			sizeOfword = nextIndex - i;
+			if((buffer + sizeOfword) <= charspace)
+			{
+				buffer = buffer + sizeOfword;
+			}
+			else
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				buffer = sizeOfword;			
+			}
+			
+			newCitation += citationString.substring(i, nextIndex+1);	
+			i = nextIndex;
+		}
+		else
+		{
+			sizeOfword = citationString.length - i;
+			if((buffer + sizeOfword) > charspace)
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			newCitation += citationString.substring(i, citationString.length);				
+			i = citationString.length + 1;
+		}
+	}
+
+	$('#references').append('<div>' + newCitation + '</div><br/>');
+}
+
 function requestPapers()
 {
 	var keywordSearch = $('#keyword').val();
@@ -175,7 +217,7 @@ function citation(event)
 		type:'POST',
 		url:'/addPaperLib',
 		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
-	}).done(function(res){console.log("Stored everything")});
-
-	//console.log(event.data.date + " " + event.data.title);
+	}).done(function(res){
+		citationAdd(paperCitation);
+	});
 }
