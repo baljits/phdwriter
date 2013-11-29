@@ -321,7 +321,7 @@ function getNewLibrary()
 			{
 				referenceLoad(res.paperCitationUsed[i].citationText);
 				$('.researchList').append('<div class="researchPaper" id="paper">\
-					<li><a onclick="renderModal('+res.paperCitationUsed[i].pdfUrl+', \'paper\')">' + res.paperCitationUsed[i].title + '</a></li>\
+					<li><a onclick="renderModal(\''+res.paperCitationUsed[i].pdfUrl+'\', \'paper\')">' + res.paperCitationUsed[i].title + '</a></li>\
 					</div> ');
 			}
 		}

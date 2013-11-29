@@ -1,10 +1,14 @@
-
+/* Function that makes a post request to the server to add a new message
+to the chat queue, so that all participants get the message
+*/
 function sendChatMessage()
 {
 	var chatMessage = $("#chatInput").val();
 
 	console.log(documentID + " " + chatMessage);
 	chatMessage = $.trim(chatMessage);
+
+	/* Making sure the message is not 'empty' */
 	if(chatMessage != '')
 	{
 		var addMessageRequest = $.ajax({
@@ -20,6 +24,9 @@ function sendChatMessage()
 	}
 }
 
+/* Function that periodically polls for new messages on the server,
+and renders the new messages appropriately.
+*/
 function getChatHistory()
 {
 	var getChatHistoryRequest = $.ajax({
