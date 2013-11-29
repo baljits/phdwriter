@@ -14,26 +14,6 @@ function rightSlider()
 		$('.right').animate({opacity: 1});
 	}
 
-// 	$('#rightToggle').toggle('blind', {direction: right});
-	
-// 	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
-// 	{
-// 		$('#buttonright').animate({marginLeft: "0px"});
-// 		$('#btntxt2').text("");
-// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
-// 		$('#keyword').focus();
-// 		$('.right').animate({opacity: 0.3});
-// 		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
-// 	}
-// 	else
-// 	{
-// 		$('#buttonright').animate({marginLeft: "200px"});
-// 		$('#btntxt2').text(" Search");
-// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
-// 		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
-// 			$('.right').animate({opacity: 1});
-//         });	
-// 	}
 }
 
 function leftSlider()
@@ -56,7 +36,7 @@ function leftSlider()
 function citationAdd(citationString, citationTitle, citationUrl)
 {
 	var charspace = 50;
-	var newCitation = "";
+	var newCitation = "&nbsp;";
 	var nextIndex = 0;
 	var sizeOfword = 0;
 	var buffer = 0;
@@ -73,7 +53,7 @@ function citationAdd(citationString, citationTitle, citationUrl)
 			}
 			else
 			{
-				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				buffer = sizeOfword;			
 			}
 			
@@ -85,7 +65,7 @@ function citationAdd(citationString, citationTitle, citationUrl)
 			sizeOfword = citationString.length - i;
 			if((buffer + sizeOfword) > charspace)
 			{
-				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			newCitation += citationString.substring(i, citationString.length);				
 			i = citationString.length + 1;
@@ -103,7 +83,7 @@ function citationAdd(citationString, citationTitle, citationUrl)
 function referenceLoad(citationString)
 {
 	var charspace = 50;
-	var newCitation = "";
+	var newCitation = "&nbsp;";
 	var nextIndex = 0;
 	var sizeOfword = 0;
 	var buffer = 0;
@@ -120,7 +100,7 @@ function referenceLoad(citationString)
 			}
 			else
 			{
-				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				buffer = sizeOfword;			
 			}
 			
@@ -132,7 +112,7 @@ function referenceLoad(citationString)
 			sizeOfword = citationString.length - i;
 			if((buffer + sizeOfword) > charspace)
 			{
-				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			newCitation += citationString.substring(i, citationString.length);				
 			i = citationString.length + 1;
@@ -160,7 +140,6 @@ function requestPapers()
 	tempString = tempString + keywordSearch.substring(0);
 	keywordSearch = tempString;
 	var paperLists = "";
-	//console.log("Keyword : " +keywordSearch);
 
 	searchRequest = $.ajax({
 		type: "POST",
@@ -168,7 +147,6 @@ function requestPapers()
 		data: {keyword:keywordSearch},
 		cache: false
 	}).done(function(res){
-		//console.log(res);alert("message received : " + res.paperArray);
 
 		var researchPaperList = JSON.parse(res.paperArray);
 		var index = 0;
@@ -180,9 +158,7 @@ function requestPapers()
 			$('.searchResultList').append('<a class="list-group-item">\
 				<h6 class="list-group-item-heading">'+researchPaperList[index][0]+'</h6>\
 				<p class="list-group-item-text">'+researchPaperList[index][1]+'</p></a>');
-			//onclick=\"alert(\\\"hello\\\");viewModal(\\\"'++'\\\");"
 
-//			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-success btn-sm viewButton">View</button>');
 			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3], type:"paper"}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Cite</button>');
@@ -205,7 +181,6 @@ function imageResults()
 		tempString = tempString + "+";
 		imageKeyword = imageKeyword.substring(spaceIndex+1);
 		spaceIndex = imageKeyword.indexOf(" ");
-		//console.log(spaceIndex);
 	}
 	tempString = tempString + imageKeyword.substring(0);
 	imageKeyword = tempString;
@@ -226,7 +201,7 @@ function imageResults()
 				<img class=\"thumbnail\" src=\"'+imageSearchList[index][2]+'\"></img>\
 				</div>');
 
-			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Add</button>');
+			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm addButton">Add</button>');
 			$('.searchResultList').children(':last-child').click({title:imageSearchList[index][0], thumbUrl:imageSearchList[index][2], fullUrl: imageSearchList[index][3]}, imageAdd);
 
 		}
@@ -238,7 +213,6 @@ function renderModal(url, type)
 {
 	var title = url.substring(url.lastIndexOf('/')+1);
 	$('#openPDF').children().remove();
-	//$('#myModal').append('<iframe src="http://arxiv.org/pdf/1307.7440" width="800px" height="600px"></iframe>');
 
 	if(type=="paper")
 	{
@@ -268,8 +242,8 @@ function viewModal(event)
 function imageLibraryAdd(imageTitle, imageUrl)
 {
 	$('.imageList').append('<div class="image"><li><a onclick="renderModal(\'' + imageUrl + '\', \'img\')">' + imageTitle + '</a></li></div>'); 	
-	var fileName = imageURL.substring(imageURL.lastIndexOf('/')+1);
-	imagesCited[fileName] = imageURL;
+	var fileName = imageUrl.substring(imageUrl.lastIndexOf('/')+1);
+	imagesCited[fileName] = imageUrl;
 }
 
 function imageAdd(event)
@@ -293,6 +267,9 @@ function citation(event)
 		url:'/addPaperLib',
 		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
 	}).done(function(res){
+		$('h6:contains(' + event.data.title + ')').parent().next().css('margin-left', '124px')
+		$('h6:contains(' + event.data.title + ')').parent().next().next().text("Cited");
+		$('h6:contains(' + event.data.title + ')').parent().next().next().prop('disabled', 'true');				
 		citationAdd(paperCitation, event.data.title, event.data.url);
 	});
 }

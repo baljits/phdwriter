@@ -19,6 +19,17 @@ a {
 	margin-bottom: 20px; 
 }
 
+#indexLogo {
+	position: absolute;
+	z-index: 99;
+}
+
+#indexLogoImg {
+	max-height: 85px;
+	margin-left: 28px;
+	margin-top: -20px;
+}
+ 
 .viewButton {
 	display: inline;
 	margin-left: 132px;
@@ -27,6 +38,11 @@ a {
 .citeButton {
 	display: inline;
 	margin-left: 10px;
+}
+
+.addButton {
+	display: inline;
+	margin-left: -4px;
 }
 
 .libraryColumn {
