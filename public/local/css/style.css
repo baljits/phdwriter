@@ -106,3 +106,7 @@ a {
 	height: 163px;
 	overflow: auto;
 }
+
+.warningMessage {
+	margin-top: 7px;
+}
