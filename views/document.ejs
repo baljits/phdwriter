@@ -45,17 +45,17 @@
 			<span class="glyphicon glyphicon-chevron-left" id="buttonleftspan"></span>
 		</button>
 		<div class="libraryColumn">
-
-			<div class="researchList">Research
+			<div class="researchList"><span class="glyphicon glyphicon-pushpin"></span> <b>Research</b>
 				<% for(var i=0; i<paperCitationUsed.length; i++) { %>
-				<div class="researchPaper" id="paper")>
+				<div class="researchPaper" id="paper">
 					<li><a onclick="renderModal('<%=paperCitationUsed[i].pdfUrl %>', 'paper')"><%=paperCitationUsed[i].title %></a></li>
 				</div> 
 				<% } %> 
 			</div>
-			<div class="imageList">Image
+			<br/>
+			<div class="imageList"><span class="glyphicon glyphicon-pushpin"></span> <b>Image</b>
 				<% for(var i=0; i<imagesUsed.length; i++) { %>
-				<div class="image")>
+				<div class="image">
 					<li><a onclick="renderModal('<%=imagesUsed[i].imageThumbUrl %>', 'img')"><%=imagesUsed[i].title %></a></li>
 				</div> 
 				<% } %> 
@@ -65,9 +65,15 @@
 	<div id="right" class="right">
 		<div id="preview">
 			<div id="showarea"></div>
-			<div id="references"><h2>References</h2></div>
+			<% if (paperCitationUsed.length > 0) { %>
+			<div id="references"><h3>References</h3></div>
+				<% for(var i=0; i<paperCitationUsed.length; i++) { %>
+					<script>referenceLoad("<%= paperCitationUsed[i].citationText %>")</script>
+				<% } %> 
+			<% } %>
 		</div>
-
+		<div id="rbot"></div>
+	</div>	
 		<div class="searchColumn pull-right">
 
 			<div id="rightColumn">
