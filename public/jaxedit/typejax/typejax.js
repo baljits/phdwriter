@@ -8,7 +8,7 @@
  * Release: http://code.google.com/p/jaxedit/
  */
 
-if (!window.console) console = {log : function() {}};
+if (window.console) console = {log : function() {}};
 
 var typejax = {
   totaltext : "",
@@ -975,6 +975,9 @@ typejax.parser = function(input, modstart, modend){
         case "usetheme":
           this.cmdUseTheme(node);
           break;
+        case "includegraphics":
+          this.cmdsImage(node);
+          break;
         default:
           //this.cmdsIgnore();
       }
@@ -1152,6 +1155,26 @@ typejax.parser = function(input, modstart, modend){
         node.value = "<b>" + node.argarray[0].childs[0].value + "</b>";
         node.childs = [];
       }
+    },
+
+    cmdsImage : function(node) {
+      var width = 100;
+      if(node.argarray[0] != null)
+      {
+        var currentScale = node.argarray[0].childs[0].value;
+        node.argarray[0].childs[0].value = ''
+        if(currentScale.indexOf('width=') != -1 && currentScale.length > 6)
+          width = parseInt(currentScale.substring(6));
+      }
+
+      if(node.argarray[1] != null)
+      {
+        var currentImage = node.argarray[1].childs[0].value;
+        node.argarray[1].childs[0].value = ''
+      }
+
+      node.name = "graphic";
+      node.value = "<div><img style='width:"+width+"px' src='/local/media/logo.png'/></div>";
     },
 
     cmdsTitle : function(node) {
@@ -2172,6 +2195,9 @@ typejax.builder = function(tree, flag){
         case "item":
           open = "<li>", close = "</li>";
           break;
+        case "graphic":
+          open += tree.value;
+          break;
       }
     }
   } else {
@@ -2262,7 +2288,8 @@ typejax.latex = {
     "transsplitverticalout": "transdissolve",
     "transglitter": "transdissolve",
     "transwipe": "transdissolve",
-    "transdissolve": "transdissolve"
+    "transdissolve": "transdissolve",
+    "includegraphics": "includegraphics"
   },
   // main group could include main and block groups
   // block group cuuld include inline groups and bmath elements
@@ -2288,7 +2315,8 @@ typejax.latex = {
     "textbf" : "inline",
     "theorem" : "main",
     "titlepage": "block",
-    "verbatim" : "block"
+    "verbatim" : "block",
+    "includegraphics": "block"
   },
   // list of groups which could not include it
   grpsout : {
@@ -2332,7 +2360,8 @@ typejax.latex = {
     "textbf": ["{}"],
     "usetheme": ["{}"],
     "transdissolve": ["<>", "[]"],
-    "transduration": ["<>", "{}"]
+    "transduration": ["<>", "{}"],
+    "includegraphics": ["[]","{}"]
   },
   cmdvalues : {},
   counters : {},
