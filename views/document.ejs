@@ -12,6 +12,7 @@
 	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	
 	<script>
+		var csrfToken = '<%= token %>';
 		var documentID = '<%= documentID %>';
 		var editor;
 		var codeAreaObject = {};
@@ -136,8 +137,15 @@
 			</button>
 			<div class="clearfix"></div>
 			<div id="rightToggle">
-				<div class="list-group searchResultList">
+				<div class="progress_bar" style="width:70%; margin-left:22%">
+					<div class="progress progress-striped active">
+						<div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+							<span class="sr-only"></span>
+						</div>
+					</div>
 				</div>
+
+				<div class="list-group searchResultList"></div>
 			</div>
 		</div>		
 	</div>

@@ -4,12 +4,13 @@ function sendChatMessage()
 	var chatMessage = $("#chatInput").val();
 
 	console.log(documentID + " " + chatMessage);
+	chatMessage = $.trim(chatMessage);
 	if(chatMessage != '')
 	{
 		var addMessageRequest = $.ajax({
 			type: "POST",
 			url: "/addChatMessage",
-			data: {documentID:documentID, message: chatMessage},
+			data: {_csrf: csrfToken, documentID:documentID, message: chatMessage},
 			cache: false
 		}).done(function(res){
 			$("#chatInput").val('');
@@ -24,7 +25,7 @@ function getChatHistory()
 	var getChatHistoryRequest = $.ajax({
 		type: "POST",
 		url: "/getHistory",
-		data: {documentID:documentID},
+		data: {_csrf: csrfToken, documentID:documentID},
 	}).done(function(res){
 		//console.log(res.chatHistory + ' ' + res.error);
 		$("#chatHistory").children().remove();

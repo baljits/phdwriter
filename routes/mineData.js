@@ -28,40 +28,40 @@ exports.imageListing = function(req, res)
 	   Process the request.
 	   */
 	   result.on('end', function () {
-	   	//	console.log(imageBody);
+		//	console.log(imageBody);
 
-	   	var imageTitleStart = imageBody.indexOf("\"title\" : \"");
-	   	while(imageTitleStart!=-1)
-	   	{
-	   		var imageTitleEnd = imageBody.indexOf("\",", imageTitleStart+11);
-	   		var imageTitleString = imageBody.substring(imageTitleStart+11, imageTitleEnd);
+		var imageTitleStart = imageBody.indexOf("\"title\" : \"");
+		while(imageTitleStart!=-1)
+		{
+			var imageTitleEnd = imageBody.indexOf("\",", imageTitleStart+11);
+			var imageTitleString = imageBody.substring(imageTitleStart+11, imageTitleEnd);
 
-	   		var imageLinkStart = imageBody.indexOf("\"detail_link\" : \"")+17;
-	   		var imageLinkEnd = imageBody.indexOf("\",", imageLinkStart);
-	   		var imageLinkString = imageBody.substring(imageLinkStart, imageLinkEnd);
+			var imageLinkStart = imageBody.indexOf("\"detail_link\" : \"")+17;
+			var imageLinkEnd = imageBody.indexOf("\",", imageLinkStart);
+			var imageLinkString = imageBody.substring(imageLinkStart, imageLinkEnd);
 
-	   		var thumb_png_start = imageBody.indexOf("\"png_thumb\" : \"")+15;
-	   		var thumb_png_end = imageBody.indexOf("\",", thumb_png_start);
-	   		var thumb_png_string = imageBody.substring(thumb_png_start, thumb_png_end);
+			var thumb_png_start = imageBody.indexOf("\"png_thumb\" : \"")+15;
+			var thumb_png_end = imageBody.indexOf("\",", thumb_png_start);
+			var thumb_png_string = imageBody.substring(thumb_png_start, thumb_png_end);
 
-	   		var full_png_start = imageBody.indexOf("\"png_full_lossy\" : \"")+20;
-	   		var full_png_end = imageBody.indexOf("}", full_png_start)-2;
-	   		var full_png_string = imageBody.substring(full_png_start, full_png_end);
+			var full_png_start = imageBody.indexOf("\"png_full_lossy\" : \"")+20;
+			var full_png_end = imageBody.indexOf("}", full_png_start)-2;
+			var full_png_string = imageBody.substring(full_png_start, full_png_end);
 
-	   		var currentImage = new Array();
-	   		currentImage[0] = imageTitleString;
-	   		currentImage[1] = imageLinkString;
-	   		currentImage[2] = thumb_png_string;
-	   		currentImage[3] = full_png_string;
+			var currentImage = new Array();
+			currentImage[0] = imageTitleString;
+			currentImage[1] = imageLinkString;
+			currentImage[2] = thumb_png_string;
+			currentImage[3] = full_png_string;
 
-	   		imageListArray.push(currentImage);
+			imageListArray.push(currentImage);
 
-	   		imageBody = imageBody.substring(full_png_end);
-	   		imageTitleStart = imageBody.indexOf("\"title\" : \"");
+			imageBody = imageBody.substring(full_png_end);
+			imageTitleStart = imageBody.indexOf("\"title\" : \"");
 
-	   	}
-	   	res.send({"imageList":JSON.stringify(imageListArray)});
-	   });
+		}
+		res.send({"imageList":JSON.stringify(imageListArray)});
+	});
 
 });   
 
@@ -135,20 +135,26 @@ var getCitations = function(res, result) {
 	});
 
 	/* wait(end event) till the entire source code of the 
-	   search result page has been obtained.
-	   Process the request.
-	   */
-	   result.on('end', function () {
+	search result page has been obtained.
+	Process the request.
+	*/
+	result.on('end', function () {
 
-	   	/* get number of results being displayed on the page */
-	   	var totalEntriesStart = pageBody.indexOf("through ")+8;
-	   	var totalEntriesEnd = pageBody.indexOf(" (", totalEntriesStart);
-	   		var totalEntries = parseInt(pageBody.substring(totalEntriesStart, totalEntriesEnd));
+		/* get number of results being displayed on the page */
+		var totalEntriesStart = pageBody.indexOf("through ")+8;
+		var totalEntriesEnd = pageBody.indexOf(" (", totalEntriesStart);
+			var totalEntries = parseInt(pageBody.substring(totalEntriesStart, totalEntriesEnd));
 
+			console.log("Search returned " + totalEntries + " Entries");
+			if(isNaN(totalEntries))
+			{
+				console.log("Printing....");
+				res.send({"paperArray":JSON.stringify([])});
+					
+			}
+			checkResults(res,totalEntries);
 
-	   		checkResults(res,totalEntries);
-
-	   		var results = 0;
+			var results = 0;
 		/*from the html source code page; get the link
 		for the abstract page of every research paper	
 			*/

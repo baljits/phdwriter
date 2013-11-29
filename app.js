@@ -44,6 +44,27 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(passport.initialize());
 app.use(passport.session());
+
+/* Tutorials: http://sporcic.org/2012/10/csrf-with-nodejs-and-express-3/ 
+http://stackoverflow.com/questions/13516898/disable-csrf-validation-for-some-requests-on-express
+*/
+var csrf = express.csrf();
+var conditionalCSRF = function (req, res, next) {
+	/* Let the sharejs requests pass through */
+	if (req.path.indexOf('channel/bind') == -1) {
+		csrf(req, res, next);
+	} else {
+		next();
+	}
+}
+app.use(conditionalCSRF);
+
+
+app.use(function(req, res, next){
+	res.locals.token = req.session._csrf;
+	next();
+});
+
 app.use(app.router); 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -107,8 +128,6 @@ app.get('/document', authentication.isAuthenticated, routes.getDocument);
 
 app.post('/addPaperLib', authentication.isAuthenticated, libraryAdd.addingPaper);
 app.post('/addImageLib', authentication.isAuthenticated, libraryAdd.addingImage);
-/* User management */
-app.post('/getUsername', authentication.isAuthenticated, user.getUsername);
 
 /* Chat routes */
 app.post('/addChatMessage', authentication.isAuthenticated, chat.addChatMessage);

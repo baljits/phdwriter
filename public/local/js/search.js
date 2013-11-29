@@ -13,7 +13,6 @@ function rightSlider()
 		$('.searchColumn').toggle('slide',{direction: 'right'})
 		$('.right').animate({opacity: 1});
 	}
-
 }
 
 function leftSlider()
@@ -127,7 +126,7 @@ function requestPapers()
 	var keywordSearch = $('#searchInput').val();
 	keywordSearch = $.trim(keywordSearch);
 	var tempString = "";
-
+	$('.searchResultList').children().remove();
 	var spaceIndex = keywordSearch.indexOf(" "); 
 	while(spaceIndex!= -1)
 	{
@@ -141,17 +140,25 @@ function requestPapers()
 	keywordSearch = tempString;
 	var paperLists = "";
 
+	$('.progress').show();
+
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listPapers",
-		data: {keyword:keywordSearch},
+		data: {_csrf: csrfToken, keyword:keywordSearch},
 		cache: false
 	}).done(function(res){
 
+		$('.progress').hide();
 		var researchPaperList = JSON.parse(res.paperArray);
 		var index = 0;
 		
-		$('.searchResultList').children().remove();
+		if(researchPaperList.length == 0)
+		{
+			$('.searchResultList').append('<a class="list-group-item">\
+				<h6 class="list-group-item-heading">No results</h6>\
+				<p class="list-group-item-text">Try another query</p></a>');
+		}
 
 		for(index = 0; index<researchPaperList.length; index++)
 		{
@@ -175,6 +182,7 @@ function imageResults()
 	var tempString = "";
 
 	var spaceIndex = imageKeyword.indexOf(" "); 
+	$('.searchResultList').children().remove();
 	while(spaceIndex!= -1)
 	{
 		tempString = tempString + imageKeyword.substring(0, spaceIndex);
@@ -185,15 +193,24 @@ function imageResults()
 	tempString = tempString + imageKeyword.substring(0);
 	imageKeyword = tempString;
 
+	$('.progress').show();
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listImages",
-		data: {keyword:imageKeyword},
+		data: {_csrf: csrfToken, keyword:imageKeyword},
 		cache: false
 	}).done(function(res){
 		var imageSearchList = JSON.parse(res.imageList);
 		var index = 0;
-		$('.searchResultList').children().remove();
+		$('.progress').hide();
+
+		if(imageSearchList.length == 0)
+		{
+			$('.searchResultList').append('<a class="list-group-item">\
+				<h6 class="list-group-item-heading">No results</h6>\
+				<p class="list-group-item-text">Try another query</p></a>');
+		}
+
 		for(index = 0; index<imageSearchList.length; index++)
 		{
 
@@ -251,7 +268,7 @@ function imageAdd(event)
 	$.ajax({
 		type:'POST',
 		url:'/addImageLib',
-		data:{documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
+		data:{_csrf: csrfToken,documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
 	}).done(function(res){
 		imageLibraryAdd(event.data.title, event.data.thumbUrl);
 	});
@@ -265,7 +282,7 @@ function citation(event)
 	$.ajax({
 		type:'POST',
 		url:'/addPaperLib',
-		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
+		data:{_csrf: csrfToken,documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
 	}).done(function(res){
 		$('h6:contains(' + event.data.title + ')').parent().next().css('margin-left', '124px')
 		$('h6:contains(' + event.data.title + ')').parent().next().next().text("Cited");
