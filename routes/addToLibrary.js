@@ -3,6 +3,12 @@ var User = require('../models/user.js');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
+/* function is called when a paper is cited by the
+user or the collaborators. The paper is then added(visible) 
+in the user and its collaborators library. Only the 
+paper title is visible but when any user clicks on 
+the paper title,the pdf of the paper opens in a modal.
+*/
 exports.addingPaper = function(req, res){
 	var paperTitle = req.param("title");
 	var paperUrl = req.param("url");
@@ -10,7 +16,6 @@ exports.addingPaper = function(req, res){
 	var authorList = req.param("authorList");
 	var paperCitation = req.param("citation");
 	
-	console.log("Citation : "+paperCitation);
 	var documentID = req.param("documentID");
 	var currentUser = req.user;
 	
@@ -44,7 +49,13 @@ exports.addingPaper = function(req, res){
 	});	
 };
 
-
+/* function is called when an image is added to the 
+latex page by the user or the collaborators. The paper 
+is then added(visible) in the user and its collaborators
+library under the image category. Only the imagetitle
+is visible but when any user clicks on the image title,
+the full size iamge opens up in a modal.
+*/
 exports.addingImage = function(req, res){
 	var imageTitle = req.param("title");
 	var thumbImgUrl = req.param("imageThumb");
@@ -73,7 +84,7 @@ exports.addingImage = function(req, res){
 
 				
 				project.images.push(image);
-				console.log("Saved the new message");
+				console.log("Saved the image");
 				project.save();
 
 				res.send({'title':imageTitle, 'thumbImg':thumbImgUrl, 'fullImg':fullImgUrl});

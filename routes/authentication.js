@@ -3,10 +3,13 @@ var passport = require('passport');
 var User = require('../models/user.js');
 var bcrypt = require('bcrypt');
 
+/*redirects the user to the login page */
 exports.login = function(req, res){
 	res.render('login', { title: 'PhDWriter', error: '' });
 };
 
+/*redirects the user to the loginError page
+in case of unauthorized access */
 exports.loginError = function(req, res){
 	console.log("Login Error");
 	res.render('login', { title: 'PhDWriter', error: 'Incorrect username or password!' });
