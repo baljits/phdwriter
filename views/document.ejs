@@ -12,31 +12,31 @@
 	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	
 	<script>
-	var documentID = '<%= documentID %>';
-	var editor;
-	var codeAreaObject = {};
-	var imagesCited = new Object();
-	<% for(var i=0; i<imagesUsed.length; i++) { %>
-		var currentURL = '<%=imagesUsed[i].imageThumbUrl %>';
-		var fileName = currentURL.substring(currentURL.lastIndexOf('/')+1);
-		imagesCited[fileName] = currentURL;
-		<% } %>
+		var documentID = '<%= documentID %>';
+		var editor;
+		var codeAreaObject = {};
+		var imagesCited = new Object();
+		<% for(var i=0; i<imagesUsed.length; i++) { %>
+			var currentURL = '<%=imagesUsed[i].imageThumbUrl %>';
+			var fileName = currentURL.substring(currentURL.lastIndexOf('/')+1);
+			imagesCited[fileName] = currentURL;
+			<% } %>
 	// End loop
 	console.log(imagesCited);
 	
-	</script>
+</script>
 
-	<!-- Added these at the end so that it can process the elements already created -->
-	<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
-	<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
-	<script type="text/javascript" src="local/js/initAce.js"></script>
-	<script type="text/javascript" src="local/js/search.js"></script>
-	<script type="text/javascript" src="local/js/searchBar.js"></script>
-	<script type="text/javascript" src="local/js/chat.js"></script>
+<!-- Added these at the end so that it can process the elements already created -->
+<script type="text/javascript" src="jaxedit/jsquick/jsquick.js"></script>
+<script type="text/javascript" src="jaxedit/editor/jaxedit.js"></script>
+<script type="text/javascript" src="local/js/initAce.js"></script>
+<script type="text/javascript" src="local/js/search.js"></script>
+<script type="text/javascript" src="local/js/searchBar.js"></script>
+<script type="text/javascript" src="local/js/chat.js"></script>
 
-	<!-- Bootstrap -->
-	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
-	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap -->
+<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<!-- <h1><%= title %></h1> -->
@@ -55,10 +55,14 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li ><a href="/">Projects</a></li>
-				<li onclick="leftSlider()"><a>Library</a></li>
+				<li onclick="leftSlider()"><a href="#">Library</a></li>
 			</ul>
+
 			<ul id='logoutButton' class="nav navbar-nav navbar-right">
 				<li><a href="/logout">Sign Out</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li onclick="$('#chatDiv').toggle('slide', {direction: 'down'});"><a href="#">Chat <span class="glyphicon glyphicon-send"></span> </a></li>
 			</ul>
 			<div class="navbar-form form-inline">
 				<div class="searchBar input-group pull-right">
@@ -123,22 +127,27 @@
 
 	<div class="searchColumn">
 		<div id="rightColumn">
+			
 			<button type="button" class="btn btn-default pull-left" onclick="rightSlider()">
 				<span class="glyphicon glyphicon-chevron-right"></span>
 			</button>
-
+			<div class="clearfix"></div>
 			<div id="rightToggle">
 				<div class="list-group searchResultList">
 				</div>
-
-				<div id="chatDiv">
-					<div id='chatHistory'>
-					</div>
-					<input type="text" class="form-control" placeholder="Type your message" id="chatInput"></input>
-					<button id='chatSend' class="btn btn-primary" type="button" onclick="sendChatMessage()">Send</button>
-				</div>
 			</div>
 		</div>		
+	</div>
+
+	<div id="chatDiv" class="conceal">
+		<div id='chatHistory'>
+		</div>
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Type your message" id="chatInput"></input>
+			<span class="input-group-btn">
+				<button id='chatSend' class="btn btn-primary pull-right" type="button" onclick="sendChatMessage()">Send</button>
+			</span>
+		</div>
 	</div>
 </body>
 </html>

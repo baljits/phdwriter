@@ -85,20 +85,24 @@ a {
 	width:600px;
 }
 
-#btntxt1 {
-	display: inline;
-}
-
-#btntxt2 {
-	display: inline;
-}
-
 .searchResultList {
 	height: 300px;
 	overflow: auto;
 }
 
+#chatDiv {
+	position: absolute;
+	z-index: 50;
+	width: 300px;
+	bottom:0;
+	right: 0;
+	margin-right: 50px;
+	height: 200px;
+	border: 1px solid black;
+	background-color: #fafafa;
+}
+
 #chatHistory {
-	height: 100px;
+	height: 163px;
 	overflow: auto;
 }
