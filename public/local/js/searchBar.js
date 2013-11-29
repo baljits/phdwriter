@@ -18,12 +18,12 @@ function performSearch()
 
 function hideImageSearch()
 {
-	$('.dropdown-toggle').html('Articles<span class="caret"></span>')
+	$('.dropdown-toggle').html('Articles <span class="caret"></span>')
 }
 
 function hideArticleSearch()
 {
-	$('.dropdown-toggle').html('Images<span class="caret"></span>')
+	$('.dropdown-toggle').html('Images <span class="caret"></span>')
 }
 
 $(document).ready(function() {

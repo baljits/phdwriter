@@ -268,6 +268,8 @@ function viewModal(event)
 function imageLibraryAdd(imageTitle, imageUrl)
 {
 	$('.imageList').append('<div class="image"><li><a onclick="renderModal(\'' + imageUrl + '\', \'img\')">' + imageTitle + '</a></li></div>'); 	
+	var fileName = imageURL.substring(imageURL.lastIndexOf('/')+1);
+	imagesCited[fileName] = imageURL;
 }
 
 function imageAdd(event)

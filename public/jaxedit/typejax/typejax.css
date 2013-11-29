@@ -18,7 +18,7 @@ div.par {
 }
  
 div.frame {
-  border: 1px solid #000000;
+  /*border: 1px solid #000000;*/
   padding: 0.4em;
 }
 
@@ -33,17 +33,17 @@ div.framesubtitle {
 }
 
 div.center {
-  border: 1px dashed #C1C1C1;
+  /*border: 1px dashed #C1C1C1;*/
   text-align: center;
 }
 
 div.verbatim {
-  border: 1px dashed #C1C1C1;
+  /*border: 1px dashed #C1C1C1;*/
   margin: 1px;
 }
 
 div.definition, div.definitions, div.example, div.examples, div.fact, div.lemma, div.theorem, div.proposition, div.corollary, div.proof, div.exercise, div.remark, div.solution {
-  border: 1px dashed #C1C1C1;
+  /*border: 1px dashed #C1C1C1;*/
   margin: 1px;
   /*font-family: Tahoma, KaiTi;*/
 }
@@ -54,7 +54,7 @@ div.preamble {
 
 div.tableofcontents {
   margin: 2em 0em 1em 0em;
-  border: 1px dashed #C1C1C1;
+  /*border: 1px dashed #C1C1C1;*/
   padding: 0.2em;
 }
 
