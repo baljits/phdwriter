@@ -75,7 +75,7 @@ typejax.updater = {
     while (this.thequeue.length > 0) {
       task = this.thequeue.shift();
       delstart = task[0]; delend = task[1]; deltext = task[2]; instext = task[3]; newsize = task[4];
-      if (deltext != localtext.substring(delstart,delend)) alert("text content is wrong!");
+      if (deltext != localtext.substring(delstart,delend)) console.log("text content is wrong!");
       localhead = (delstart < localhead) ? delstart : localhead;
       localtail = (localsize - delend < localtail) ? localsize - delend : localtail;
       localtext = localtext.substring(0,delstart) + instext + localtext.substring(delend,localsize);
@@ -83,7 +83,7 @@ typejax.updater = {
       delstart = localhead;
       delend = oldsize - localtail;
       instext = localtext.substring(localhead, localsize - localtail);
-      if (localsize != localtext.length) alert("text size is wrong!");
+      if (localsize != localtext.length) console.log("text size is wrong!");
     }
     //console.log("delstart:", delstart, "delend:", delend, "inssize:", instext.length, "newsize:", newsize);
     typejax.totaltext = localtext; typejax.totalsize = localsize;

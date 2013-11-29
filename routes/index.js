@@ -48,6 +48,26 @@ exports.getDocument = function(req, res){
 	});	
 };
 
+exports.getLibrary = function(req, res){
+	var documentID = req.param("documentID");
+	var currentUser = req.user;
+
+	Library.Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
+
+		if(!project)
+			res.send({"error":'Invalid Project ID!'});
+		else{
+			// Checking for authorizaton
+			if(project.collaborators.indexOf(currentUser._id) == -1)
+				res.send({"error":'Unauthorized Resource!'});
+			else
+			{
+				res.send({"error":"No error", 'paperCitationUsed' : project.citations, 'imagesUsed' : project.images});
+			}
+		}
+	});	
+};
+
 exports.addProject = function(req, res){
 	var currentUser = req.user;
 	var title = req.body.title;

@@ -130,6 +130,7 @@ app.get('/document', authentication.isAuthenticated, routes.getDocument);
 
 app.post('/addPaperLib', authentication.isAuthenticated, libraryAdd.addingPaper);
 app.post('/addImageLib', authentication.isAuthenticated, libraryAdd.addingImage);
+app.post('/getLibrary', authentication.isAuthenticated, routes.getLibrary);
 
 /* Chat routes */
 app.post('/addChatMessage', authentication.isAuthenticated, chat.addChatMessage);

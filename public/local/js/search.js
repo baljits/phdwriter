@@ -288,3 +288,47 @@ function citation(event)
 		citationAdd(paperCitation, event.data.title, event.data.url);
 	});
 }
+
+
+function getNewLibrary()
+{
+	var getChatHistoryRequest = $.ajax({
+		type: "POST",
+		url: "/getLibrary",
+		data: {_csrf: csrfToken, documentID:documentID},
+	}).done(function(res){
+		//console.log(res.chatHistory + ' ' + res.error);
+		$("#chatHistory").children().remove();
+		if(res.error == 'No error')
+		{
+			imagesCited = new Object();
+			$(".image").remove();
+			for(var i=0; i<res.imagesUsed.length; i++)
+			{
+				var currentURL = res.imagesUsed[i].imageThumbUrl;
+				var fileName = currentURL.substring(currentURL.lastIndexOf('/')+1);
+				imagesCited[fileName] = currentURL;
+
+				$('.imageList').append('<div class="image">\
+					<li><a onclick="renderModal(\''+res.imagesUsed[i].imageThumbUrl+'\', \'img\')">' + res.imagesUsed[i].title + '</a></li>\
+					</div> ');
+			}
+
+			$(".researchPaper").remove();
+			$("#references >div").remove()
+			$("#references >br").remove()
+			for(var i=0; i<res.paperCitationUsed.length; i++)
+			{
+				referenceLoad(res.paperCitationUsed[i].citationText);
+				$('.researchList').append('<div class="researchPaper" id="paper">\
+					<li><a onclick="renderModal('+res.paperCitationUsed[i].pdfUrl+', \'paper\')">' + res.paperCitationUsed[i].title + '</a></li>\
+					</div> ');
+			}
+		}
+		setTimeout(getNewLibrary, 1000);
+	});
+}
+
+$(document).ready(function() {
+	setTimeout(getNewLibrary, 1000);
+});
