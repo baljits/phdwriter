@@ -151,6 +151,13 @@ function requestPapers()
 		var researchPaperList = JSON.parse(res.paperArray);
 		var index = 0;
 		
+		if(researchPaperList.length == 0)
+		{
+			$('.searchResultList').append('<a class="list-group-item">\
+				<h6 class="list-group-item-heading">No results</h6>\
+				<p class="list-group-item-text">Try another query</p></a>');
+		}
+
 		for(index = 0; index<researchPaperList.length; index++)
 		{
 			$('.searchResultList').append('<a class="list-group-item">\
@@ -195,6 +202,14 @@ function imageResults()
 		var imageSearchList = JSON.parse(res.imageList);
 		var index = 0;
 		$('.progress').hide();
+
+		if(imageSearchList.length == 0)
+		{
+			$('.searchResultList').append('<a class="list-group-item">\
+				<h6 class="list-group-item-heading">No results</h6>\
+				<p class="list-group-item-text">Try another query</p></a>');
+		}
+
 		for(index = 0; index<imageSearchList.length; index++)
 		{
 

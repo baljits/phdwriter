@@ -4,6 +4,7 @@ function sendChatMessage()
 	var chatMessage = $("#chatInput").val();
 
 	console.log(documentID + " " + chatMessage);
+	chatMessage = $.trim(chatMessage);
 	if(chatMessage != '')
 	{
 		var addMessageRequest = $.ajax({
