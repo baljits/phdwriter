@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 	editor = ace.edit("editor");
 	editor.getSession().setMode("ace/mode/latex");
-
+	editor.setShowPrintMargin(false);
 
 	sharejs.open(documentID, 'text', function (error, doc) {
 		doc.attach_ace(editor);

@@ -1,47 +1,55 @@
 function rightSlider()
 {
-	$('#rightToggle').toggle('blind', {direction: right});
+	if($('.searchColumn').attr('style') == undefined)
+		$('.searchColumn').attr('style', '');
 	
-	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
+	if($('.searchColumn').attr('style').indexOf('display: none;') != -1)
 	{
-		$('#buttonright').animate({marginLeft: "0px"});
-		$('#btntxt2').text("");
-		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
-		$('#keyword').focus();
+		$('.searchColumn').toggle('slide',{direction: 'right'})
 		$('.right').animate({opacity: 0.3});
-		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
 	}
 	else
 	{
-		$('#buttonright').animate({marginLeft: "200px"});
-		$('#btntxt2').text(" Search");
-		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
-		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
-			$('.right').animate({opacity: 1});
-        });	
+		$('.searchColumn').toggle('slide',{direction: 'right'})
+		$('.right').animate({opacity: 1});
 	}
+
+// 	$('#rightToggle').toggle('blind', {direction: right});
+	
+// 	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
+// 	{
+// 		$('#buttonright').animate({marginLeft: "0px"});
+// 		$('#btntxt2').text("");
+// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
+// 		$('#keyword').focus();
+// 		$('.right').animate({opacity: 0.3});
+// 		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
+// 	}
+// 	else
+// 	{
+// 		$('#buttonright').animate({marginLeft: "200px"});
+// 		$('#btntxt2').text(" Search");
+// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
+// 		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
+// 			$('.right').animate({opacity: 1});
+//         });	
+// 	}
 }
 
 function leftSlider()
 {
-	$('.libraryColumn').toggle('slide');
+	if($('.libraryColumn').attr('style') == undefined)
+		$('.libraryColumn').attr('style', '');
 	
-	if($("#buttonleftspan").attr('class') == 'glyphicon glyphicon-chevron-right')
+	if($('.libraryColumn').attr('style').indexOf('display: none;') != -1)
 	{
-		$('#buttonleft').animate({marginLeft: "210px"});
-		$('#btntxt1').text("");
-		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-left');
+		$('.libraryColumn').toggle('slide');
 		$('#editor').animate({opacity: 0.3});
-		$('#leftColumn').animate({ backgroundColor: '#C0C0C0'});
 	}
 	else
 	{
-		$('#buttonleft').animate({marginLeft: "0px"});
-		$('#btntxt1').text("Project ");
-		$("#buttonleftspan").attr('class', 'glyphicon glyphicon-chevron-right');
-		$('#leftColumn').animate({ backgroundColor: '#FFFFFF'}, function(){
+		$('.libraryColumn').toggle('slide');
 		$('#editor').animate({opacity: 1});
-        });
 	}
 }
 
@@ -136,7 +144,7 @@ function referenceLoad(citationString)
 
 function requestPapers()
 {
-	var keywordSearch = $('#keyword').val();
+	var keywordSearch = $('#searchInput').val();
 	keywordSearch = $.trim(keywordSearch);
 	var tempString = "";
 
@@ -185,7 +193,7 @@ function requestPapers()
 
 function imageResults()
 {
-	var imageKeyword = $('#imageKeyword').val();
+	var imageKeyword = $('#searchInput').val();
 	imageKeyword = $.trim(imageKeyword);
 
 	var tempString = "";
@@ -228,11 +236,15 @@ function imageResults()
 
 function renderModal(url, type)
 {
+	var title = url.substring(url.lastIndexOf('/')+1);
 	$('#openPDF').children().remove();
 	//$('#myModal').append('<iframe src="http://arxiv.org/pdf/1307.7440" width="800px" height="600px"></iframe>');
 
 	if(type=="paper")
+	{
 		$('#openPDF').append('<iframe src="'+url+'" width="500px" height="600px""></iframe>');
+		title += ".pdf";
+	}
 	else
 		$('#openPDF').append('<img src="'+url+'" width="500px" height="600px""></img>');
 	//$('#myModal').modal('toggle')
@@ -241,9 +253,10 @@ function renderModal(url, type)
 	//$("#openPDF").addAttr("style=\"position: absolute; height: auto; width: 600px; top: 0px; left: 525.5px; display: block;\"");
 
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").removeAttr("style");
-	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"height": "auto", "width": "520px", "top": "105px", "left": "300px", "display": "block"});
+	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"position":"absolute","height": "auto", "width": "520px", "top": "105px", "left": "30%", "display": "block"});
 	$(".ui-dialog-titlebar-close").html('<span class="glyphicon glyphicon-remove"></span>');
 	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
+	$('.ui-dialog-title').html(title);
 }
 function viewModal(event)
 {

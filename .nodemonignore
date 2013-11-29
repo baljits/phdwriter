@@ -1,0 +1,3 @@
+# Ignoring /public, as all files under this are client side
+
+/public/

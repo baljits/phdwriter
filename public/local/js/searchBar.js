@@ -1,32 +1,35 @@
+function performSearch()
+{
+	var dropdownValue = $('.dropdown-toggle').html();
 
+	if( dropdownValue.indexOf('Article') != -1)
+	{
+		// Article search
+		requestPapers();
+	}
+	else
+	{
+		// Image Search
+		imageResults();
+	}
+	if($('.searchColumn').attr('style').indexOf('display: none;') != -1)
+		rightSlider();
+}
 
 function hideImageSearch()
 {
-	$('#image_search').hide();
-	$('#imageButton').removeClass("active");
-	$('#article_search').show();
-	$('#articleButton').addClass("active");
-	$('.searchResultList').children().remove();
+	$('.dropdown-toggle').html('Articles<span class="caret"></span>')
 }
 
 function hideArticleSearch()
 {
-	$('#article_search').hide();
-	$('#articleButton').removeClass("active");
-	$('#image_search').show();
-	$('#imageButton').addClass("active");
-	$('.searchResultList').children().remove();
+	$('.dropdown-toggle').html('Images<span class="caret"></span>')
 }
 
 $(document).ready(function() {
-	$("#keyword").keyup(function(event){
+	$("#searchInput").keyup(function(event){
 		if(event.keyCode == 13){
-			$("#paperSearchButton").click();
-		}
-	});
-	$("#imageKeyword").keyup(function(event){
-		if(event.keyCode == 13){
-			$("#imageSearchButton").click();
+			$("#searchButton").click();
 		}
 	});
 });

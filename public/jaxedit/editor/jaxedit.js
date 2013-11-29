@@ -59,7 +59,6 @@ function initJaxEdit() {
 				rtop : document.getElementById("rtop"),
 				preview : document.getElementById("preview"),
 				showarea : document.getElementById("showarea"),
-				rbot : document.getElementById("rbot")
 			},
 
 			scrollers: {
@@ -143,8 +142,7 @@ function initJaxEdit() {
 				right = childs.right,
 				rtop = childs.rtop,
 				preview = childs.preview,
-				showarea = childs.showarea,
-				rbot = childs.rbot;
+				showarea = childs.showarea;
 				var wsizes = [], hsizes = [];
 
 				var pageWidth = window.innerWidth;
@@ -187,7 +185,6 @@ function initJaxEdit() {
 					that.resizeElements(wsizes, hsizes);
 
 					body.style.height = "100%";
-					rtop.style.display = rbot.style.display = "none";
 					showarea.style.padding = "50px";
 					body.style.margin = "auto";
 					body.style.backgroundColor = "gray";
@@ -215,7 +212,7 @@ function initJaxEdit() {
 
 					right.style.top = 0 + "px";
 					resizer.style.display = "block";
-					rtop.style.display = "block"; rbot.style.display = "block";
+					rtop.style.display = "block";
 
 					hsizes.push([resizer, halfHeight + 4]);
 					
@@ -233,7 +230,7 @@ function initJaxEdit() {
 
 					right.style.top = (topHeight + halfBorder / 2) + "px";
 					resizer.style.display = "none";
-					rtop.style.display = "none"; rbot.style.display = "none";
+					rtop.style.display = "none"; 
 
 					adjustSize();
 					that.resizeElements(wsizes, hsizes);
@@ -258,7 +255,7 @@ function initJaxEdit() {
 					wsizes.push([showarea, rWrapWidth - 6]); hsizes.push([showarea, rWrapHeight - 10]);
 
 					wsizes.push([ltop, lWrapWidth - 6]); wsizes.push([lbot, lWrapWidth - 6]);
-					wsizes.push([rtop, rWrapWidth - 6]); wsizes.push([rbot, rWrapWidth - 6]);
+					wsizes.push([rtop, rWrapWidth - 6]); 
 				}
 			},
 
