@@ -13,27 +13,6 @@ function rightSlider()
 		$('.searchColumn').toggle('slide',{direction: 'right'})
 		$('.right').animate({opacity: 1});
 	}
-
-// 	$('#rightToggle').toggle('blind', {direction: right});
-	
-// 	if($("#buttonrightspan").attr('class') == 'glyphicon glyphicon-chevron-left')
-// 	{
-// 		$('#buttonright').animate({marginLeft: "0px"});
-// 		$('#btntxt2').text("");
-// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-right');
-// 		$('#keyword').focus();
-// 		$('.right').animate({opacity: 0.3});
-// 		$('#rightColumn').animate({ backgroundColor: '#C0C0C0'});
-// 	}
-// 	else
-// 	{
-// 		$('#buttonright').animate({marginLeft: "200px"});
-// 		$('#btntxt2').text(" Search");
-// 		$('#buttonrightspan').attr('class', 'glyphicon glyphicon-chevron-left');
-// 		$('#rightColumn').animate({ backgroundColor: 'transparent'}, function(){
-// 			$('.right').animate({opacity: 1});
-//         });	
-// 	}
 }
 
 function leftSlider()
@@ -165,24 +144,19 @@ function requestPapers()
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listPapers",
-		data: {keyword:keywordSearch},
+		data: {_csrf: csrfToken, keyword:keywordSearch},
 		cache: false
 	}).done(function(res){
-		//console.log(res);alert("message received : " + res.paperArray);
 		$('.progress').hide();
 		var researchPaperList = JSON.parse(res.paperArray);
 		var index = 0;
 		
-		//$('.searchResultList').children().remove();
-
 		for(index = 0; index<researchPaperList.length; index++)
 		{
 			$('.searchResultList').append('<a class="list-group-item">\
 				<h6 class="list-group-item-heading">'+researchPaperList[index][0]+'</h6>\
 				<p class="list-group-item-text">'+researchPaperList[index][1]+'</p></a>');
-			//onclick=\"alert(\\\"hello\\\");viewModal(\\\"'++'\\\");"
-
-//			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
+	
 			$('.searchResultList').append('<button type="button" class="btn btn-success btn-sm viewButton">View</button>');
 			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3], type:"paper"}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Cite</button>');
@@ -215,7 +189,7 @@ function imageResults()
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listImages",
-		data: {keyword:imageKeyword},
+		data: {_csrf: csrfToken, keyword:imageKeyword},
 		cache: false
 	}).done(function(res){
 		var imageSearchList = JSON.parse(res.imageList);
@@ -279,7 +253,7 @@ function imageAdd(event)
 	$.ajax({
 		type:'POST',
 		url:'/addImageLib',
-		data:{documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
+		data:{_csrf: csrfToken,documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
 	}).done(function(res){
 		imageLibraryAdd(event.data.title, event.data.thumbUrl);
 	});
@@ -293,7 +267,7 @@ function citation(event)
 	$.ajax({
 		type:'POST',
 		url:'/addPaperLib',
-		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
+		data:{_csrf: csrfToken,documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
 	}).done(function(res){
 		citationAdd(paperCitation, event.data.title, event.data.url);
 	});

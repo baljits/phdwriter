@@ -47,6 +47,7 @@
 		<div id="addProjectForm" class="col-md-4 conceal">
 			<h3>Add New Project:</h3>
 			<form  action="/addProject" method="post">
+				<input type="hidden" name="_csrf" value='<%= token %>'/>
 				<div>
 					<input type="text" class="form-control" placeholder="Title" name="title"/>
 				</div>
