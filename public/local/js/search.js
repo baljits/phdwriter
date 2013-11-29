@@ -147,7 +147,7 @@ function requestPapers()
 	var keywordSearch = $('#searchInput').val();
 	keywordSearch = $.trim(keywordSearch);
 	var tempString = "";
-
+	$('.searchResultList').children().remove();
 	var spaceIndex = keywordSearch.indexOf(" "); 
 	while(spaceIndex!= -1)
 	{
@@ -161,7 +161,7 @@ function requestPapers()
 	keywordSearch = tempString;
 	var paperLists = "";
 	//console.log("Keyword : " +keywordSearch);
-
+	$('.progress').show();
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listPapers",
@@ -169,11 +169,11 @@ function requestPapers()
 		cache: false
 	}).done(function(res){
 		//console.log(res);alert("message received : " + res.paperArray);
-
+		$('.progress').hide();
 		var researchPaperList = JSON.parse(res.paperArray);
 		var index = 0;
 		
-		$('.searchResultList').children().remove();
+		//$('.searchResultList').children().remove();
 
 		for(index = 0; index<researchPaperList.length; index++)
 		{
@@ -199,6 +199,7 @@ function imageResults()
 	var tempString = "";
 
 	var spaceIndex = imageKeyword.indexOf(" "); 
+	$('.searchResultList').children().remove();
 	while(spaceIndex!= -1)
 	{
 		tempString = tempString + imageKeyword.substring(0, spaceIndex);
@@ -210,6 +211,7 @@ function imageResults()
 	tempString = tempString + imageKeyword.substring(0);
 	imageKeyword = tempString;
 
+	$('.progress').show();
 	searchRequest = $.ajax({
 		type: "POST",
 		url: "/listImages",
@@ -218,7 +220,7 @@ function imageResults()
 	}).done(function(res){
 		var imageSearchList = JSON.parse(res.imageList);
 		var index = 0;
-		$('.searchResultList').children().remove();
+		$('.progress').hide();
 		for(index = 0; index<imageSearchList.length; index++)
 		{
 
