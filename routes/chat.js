@@ -3,7 +3,8 @@ var User = require('../models/user.js');
 var Chat = require('../models/chat.js')
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
-
+var check = require('validator').check,
+    sanitize = require('validator').sanitize
 /*
 * GET Chat history.
 */
@@ -36,6 +37,7 @@ exports.addChatMessage = function(req, res){
 	var currentUser = req.user;
 	var chatMessage = req.param("message");
 
+	chatMessage = sanitize(chatMessage).escape();
 	Library.Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
