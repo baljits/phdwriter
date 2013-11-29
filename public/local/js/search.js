@@ -53,7 +53,54 @@ function leftSlider()
 	}
 }
 
-function citationAdd(citationString)
+function citationAdd(citationString, citationTitle, citationUrl)
+{
+	var charspace = 50;
+	var newCitation = "";
+	var nextIndex = 0;
+	var sizeOfword = 0;
+	var buffer = 0;
+
+	for(var i=0; i<citationString.length; i++)
+	{
+		nextIndex = citationString.indexOf(" ", i);
+		if(nextIndex != -1)
+		{
+			sizeOfword = nextIndex - i;
+			if((buffer + sizeOfword) <= charspace)
+			{
+				buffer = buffer + sizeOfword;
+			}
+			else
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				buffer = sizeOfword;			
+			}
+			
+			newCitation += citationString.substring(i, nextIndex+1);	
+			i = nextIndex;
+		}
+		else
+		{
+			sizeOfword = citationString.length - i;
+			if((buffer + sizeOfword) > charspace)
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			newCitation += citationString.substring(i, citationString.length);				
+			i = citationString.length + 1;
+		}
+	}
+
+	if(!($('#references').is(':visible')))
+	{
+		$('#preview').append('<div id="references"><h3>References</h3></div>');
+	}
+	$('#references').append('<div>' + newCitation + '</div><br/>');
+	$('.researchList').append('<div class="researchPaper" id="paper"><li><a onclick="renderModal(\'' + citationUrl + '\', \'paper\')">' + citationTitle + '</a></li></div>');			
+}
+
+function referenceLoad(citationString)
 {
 	var charspace = 50;
 	var newCitation = "";
@@ -144,7 +191,6 @@ function requestPapers()
 	});
 }
 
-
 function imageResults()
 {
 	var imageKeyword = $('#searchInput').val();
@@ -219,13 +265,22 @@ function viewModal(event)
 	
 }
 
+function imageLibraryAdd(imageTitle, imageUrl)
+{
+	$('.imageList').append('<div class="image"><li><a onclick="renderModal(\'' + imageUrl + '\', \'img\')">' + imageTitle + '</a></li></div>'); 	
+	var fileName = imageURL.substring(imageURL.lastIndexOf('/')+1);
+	imagesCited[fileName] = imageURL;
+}
+
 function imageAdd(event)
 {
 	$.ajax({
 		type:'POST',
 		url:'/addImageLib',
 		data:{documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
-	}).done(function(res){console.log("Stored all images")});
+	}).done(function(res){
+		imageLibraryAdd(event.data.title, event.data.thumbUrl);
+	});
 
 }
 
@@ -238,6 +293,6 @@ function citation(event)
 		url:'/addPaperLib',
 		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
 	}).done(function(res){
-		citationAdd(paperCitation);
+		citationAdd(paperCitation, event.data.title, event.data.url);
 	});
 }
