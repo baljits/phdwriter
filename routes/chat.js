@@ -12,7 +12,7 @@ exports.getChatHistory = function(req, res){
 	var currentUser = req.user;
 
 	Library.Project.findOne({'_id':ObjectId(documentID)}, function(err, project) {
-		console.log("Found project: " + project + " " + !project);
+		//console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)
 			res.send({"error":'Invalid Project ID!'});

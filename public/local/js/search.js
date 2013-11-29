@@ -53,6 +53,48 @@ function leftSlider()
 	}
 }
 
+function citationAdd(citationString)
+{
+	var charspace = 50;
+	var newCitation = "";
+	var nextIndex = 0;
+	var sizeOfword = 0;
+	var buffer = 0;
+
+	for(var i=0; i<citationString.length; i++)
+	{
+		nextIndex = citationString.indexOf(" ", i);
+		if(nextIndex != -1)
+		{
+			sizeOfword = nextIndex - i;
+			if((buffer + sizeOfword) <= charspace)
+			{
+				buffer = buffer + sizeOfword;
+			}
+			else
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+				buffer = sizeOfword;			
+			}
+			
+			newCitation += citationString.substring(i, nextIndex+1);	
+			i = nextIndex;
+		}
+		else
+		{
+			sizeOfword = citationString.length - i;
+			if((buffer + sizeOfword) > charspace)
+			{
+				newCitation += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			newCitation += citationString.substring(i, citationString.length);				
+			i = citationString.length + 1;
+		}
+	}
+
+	$('#references').append('<div>' + newCitation + '</div><br/>');
+}
+
 function requestPapers()
 {
 	var keywordSearch = $('#searchInput').val();
@@ -95,9 +137,9 @@ function requestPapers()
 
 //			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-success btn-sm viewButton">View</button>');
-			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
+			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3], type:"paper"}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Cite</button>');
-			$('.searchResultList').children(':last-child').click({paperCitation: researchPaperList[index][4]}, citation);
+			$('.searchResultList').children(':last-child').click({paperCitation: researchPaperList[index][4], title: researchPaperList[index][0], author: researchPaperList[index][1], url:researchPaperList[index][3], date:researchPaperList[index][2]}, citation);
 		}
 	});
 }
@@ -137,19 +179,24 @@ function imageResults()
 			$('.searchResultList').append('<div class="list-group-item">\
 				<img class=\"thumbnail\" src=\"'+imageSearchList[index][2]+'\"></img>\
 				</div>');
+
+			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Add</button>');
+			$('.searchResultList').children(':last-child').click({title:imageSearchList[index][0], thumbUrl:imageSearchList[index][2], fullUrl: imageSearchList[index][3]}, imageAdd);
+
 		}
 	});
 
 }
 
-
-function viewModal(event)
+function renderModal(url, type)
 {
-	console.log("Event " + event.data.url);
 	$('#openPDF').children().remove();
 	//$('#myModal').append('<iframe src="http://arxiv.org/pdf/1307.7440" width="800px" height="600px"></iframe>');
 
-	$('#openPDF').append('<iframe src="'+event.data.url+'" width="500px" height="600px""></iframe>');
+	if(type=="paper")
+		$('#openPDF').append('<iframe src="'+url+'" width="500px" height="600px""></iframe>');
+	else
+		$('#openPDF').append('<img src="'+url+'" width="500px" height="600px""></img>');
 	//$('#myModal').modal('toggle')
 	$("#openPDF").dialog();
 	$("#openPDF").removeAttr("style");
@@ -160,9 +207,32 @@ function viewModal(event)
 	$(".ui-dialog-titlebar-close").html('<span class="glyphicon glyphicon-remove"></span>');
 	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
 }
+function viewModal(event)
+{
+	console.log("Event " + event.data.url);
+	renderModal(event.data.url, event.data.type);
+	
+}
 
+function imageAdd(event)
+{
+	$.ajax({
+		type:'POST',
+		url:'/addImageLib',
+		data:{documentID : documentID, title:event.data.title, imageThumb:event.data.thumbUrl, imageFull: event.data.fullUrl}
+	}).done(function(res){console.log("Stored all images")});
+
+}
 
 function citation(event)
 {
 	var paperCitation = event.data.paperCitation;
+
+	$.ajax({
+		type:'POST',
+		url:'/addPaperLib',
+		data:{documentID : documentID, title:event.data.title, url:event.data.url, authorList: event.data.author, date: event.data.date, citation:event.data.paperCitation }
+	}).done(function(res){
+		citationAdd(paperCitation);
+	});
 }

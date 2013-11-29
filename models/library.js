@@ -8,14 +8,14 @@ var citationSchema = new Schema({
 	title: String,
 	authors: [String],
 	pdfUrl: String,
-	publicationDate: String,
-	citationText: String
+	citationText: String,
+	publicationDate: String
 });
 
 var imageSchema = new Schema({
 	title: String,
 	imageThumbUrl: String,
-	imageUrl: String,
+	imageUrl: String
 });
 
 var projectSchema = new Schema({
