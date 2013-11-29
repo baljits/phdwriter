@@ -42,6 +42,8 @@
 <body>
 	<!-- <h1><%= title %></h1> -->
 
+	<div id="indexLogo"><img id="indexLogoImg" src='/local/media/logo.png'/></div>
+
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -50,7 +52,9 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">PhDWriter</a>
+			<ul class="nav navbar-nav">
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+			</ul>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -83,7 +87,6 @@
 		</div>
 	</nav>
 
-
 	<div id="openPDF">
 	</div>
 	<div class="row">
@@ -109,7 +112,7 @@
 		<button type="button" class="btn btn-default pull-right" onclick="leftSlider()">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</button>
-		<div class="researchList"><span class="glyphicon glyphicon-pushpin"></span> <b>Research</b>
+		<div class="researchList"><span class="glyphicon glyphicon-pushpin"></span> <b>Research Papers</b>
 			<% for(var i=0; i<paperCitationUsed.length; i++) { %>
 			<div class="researchPaper" id="paper">
 				<li><a onclick="renderModal('<%=paperCitationUsed[i].pdfUrl %>', 'paper')"><%=paperCitationUsed[i].title %></a></li>
@@ -117,7 +120,7 @@
 			<% } %> 
 		</div>
 		<br/>
-		<div class="imageList"><span class="glyphicon glyphicon-pushpin"></span> <b>Image</b>
+		<div class="imageList"><span class="glyphicon glyphicon-pushpin"></span> <b>Images</b>
 			<% for(var i=0; i<imagesUsed.length; i++) { %>
 			<div class="image">
 				<li><a onclick="renderModal('<%=imagesUsed[i].imageThumbUrl %>', 'img')"><%=imagesUsed[i].title %></a></li>
