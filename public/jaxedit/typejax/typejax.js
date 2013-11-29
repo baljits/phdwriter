@@ -180,9 +180,9 @@ typejax.updater = {
     //console.log(showarea.innerHTML);
     MathJax.Hub.Queue(["Process", MathJax.Hub, showarea]);
     MathJax.Hub.Queue(["afterTypeset", typejax.updater, divstart, divend, showarea]);
-    if (window.jaxedit) {
-      jaxedit.childs.rbot.innerHTML = "size: " + typejax.totalsize + "; change: " + delstart + " to " + delend;
-    }
+    // if (window.jaxedit) {
+    //   jaxedit.childs.rbot.innerHTML = "size: " + typejax.totalsize + "; change: " + delstart + " to " + delend;
+    // }
   },
 
   markData : function(delstart, delend, instext) {
@@ -1158,8 +1158,9 @@ typejax.parser = function(input, modstart, modend){
     },
 
     cmdsImage : function(node) {
+      node.value = '';
       var width = 100;
-      if(node.argarray[0] != null)
+      if(node.argarray[0] != null && node.argarray[0].childs[0] != undefined)
       {
         var currentScale = node.argarray[0].childs[0].value;
         node.argarray[0].childs[0].value = ''
@@ -1167,14 +1168,18 @@ typejax.parser = function(input, modstart, modend){
           width = parseInt(currentScale.substring(6));
       }
 
-      if(node.argarray[1] != null)
+      if(node.argarray[1] != null && node.argarray[1].childs[0] != undefined)
       {
         var currentImage = node.argarray[1].childs[0].value;
         node.argarray[1].childs[0].value = ''
+        if(imagesCited[currentImage] != undefined)
+        {
+           node.name = "graphic";
+           node.value = "<div><img style='width:"+width+"px' src='"+imagesCited[currentImage]+"'/></div>";
+        }
       }
 
-      node.name = "graphic";
-      node.value = "<div><img style='width:"+width+"px' src='/local/media/logo.png'/></div>";
+     
     },
 
     cmdsTitle : function(node) {
