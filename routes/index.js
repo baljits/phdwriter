@@ -8,19 +8,31 @@ var ObjectId = mongoose.Types.ObjectId;
 
 exports.index = function(req, res){
 	Library.Project.find({'_id': { $in : req.user.projects}}, function(err, projects) {
-		// User.findOne({'_id':ObjectId(projects[i].collaborators[j])}, function(err, user){
-		// 			collaborators[i].push(user);
-		// 		});
-	res.render('index', { title: 'PhDWriter', projects: projects, user: req.user.name});
-});
-	
+		User.find({}, function(err, users)
+		{
+			collaborators = []
+			for (var i=0; i<projects.length; i++) {
+				collaborators[i] = []
+				for (var j=0; j<users.length; j++) {
+					console.log('Checking user ' + users[j].id + ' Against ' + projects[i].collaborators);
+					if(projects[i].collaborators.indexOf(users[j].id) != -1)
+					{
+						console.log("Found!");
+						collaborators[i].push(users[j].name);
+					}
+				};
+			};
+			console.log(collaborators);
+			res.render('index', { title: 'PhDWriter', projects: projects, user: req.user.name, collaborators:collaborators});
+		});
+	});
 };
 
 exports.getDocument = function(req, res){
 	console.log("Requesting for " + req.query.id);
 
 	Library.Project.findOne({'_id':ObjectId(req.query.id)}, function(err, project) {
-	
+
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)

@@ -4,34 +4,60 @@
 	<title><%= title %></title>
 	<link rel='stylesheet' href='/local/css/style.css' />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="local/js/project.js"></script>
+
 	<!-- Bootstrap -->
 	<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
 	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1><%= title %></h1>
-	<h3>Welcome, <%= user %></h3>
-	<a href="/logout">Logout</a>
-	<% for(var i=(projects.length-1); i>=0; i--) { %>
-	<div>
-		<a href="/document?id=<%=projects[i].id %>">Project ID: <%= projects[i].id %></a>
-		<div>Collaborators: <%= projects[i].collaborators %></div>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">PhDWriter</a>
+		</div>
 
-		<div>Title: <%= projects[i].title%></div> 
-	</div> 
-	<% } %>
-	<div id="addProjectForm">
-		<form  action="/addProject" method="post">
-			<div>
-				<input type="text" class="form-control" placeholder="Title" name="title"/>
-			</div>
-			<div>
-				<input type="text" class="form-control" placeholder="Collaborators (Seperated by commas)" name="collaborators"/>
-			</div>
-			<div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Projects</a></li>
+			</ul>
+			<ul id='logoutButton' class="nav navbar-nav navbar-right">
+				<li onclick="showAddProject();"><a href="#"><span class="glyphicon glyphicon-plus"></span> Add Project</a></li>
+				<li><a href="/logout">Sign Out</a></li>
+			</ul>
+		</div>
+	</nav>
+	<h3>Welcome, <%= user %></h3>
+	<div class="row">
+		<div class="list-group col-md-8">
+			<% for(var i=0; i<projects.length; i++) { %>
+			<a href="/document?id=<%=projects[i].id %>" class="list-group-item">
+				<h4 class="list-group-item-heading"><%= projects[i].title%></h4>
+				<p class="list-group-item-text">Collaborators: <%= collaborators[i] %></p>
+				<!-- <p class="list-group-item-text">Project ID: <%= projects[i].id %></p> -->
+			</a>
+			<% } %>
+		</div>
+		<div id="addProjectForm" class="col-md-4 conceal">
+			<h3>Add New Project:</h3>
+			<form  action="/addProject" method="post">
+				<div>
+					<input type="text" class="form-control" placeholder="Title" name="title"/>
+				</div>
+				<div>
+					<input type="text" class="form-control" placeholder="Collaborators (Seperated by commas)" name="collaborators"/>
+				</div>
+				<div>
 					<input type="submit" class="btn btn-success pull-right" value="Add Project"/>
 				</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
