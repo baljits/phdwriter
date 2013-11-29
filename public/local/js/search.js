@@ -238,10 +238,8 @@ function renderModal(url, type)
 	}
 	else
 		$('#openPDF').append('<img src="'+url+'" width="500px" height="600px""></img>');
-	//$('#myModal').modal('toggle')
 	$("#openPDF").dialog();
 	$("#openPDF").removeAttr("style");
-	//$("#openPDF").addAttr("style=\"position: absolute; height: auto; width: 600px; top: 0px; left: 525.5px; display: block;\"");
 
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").removeAttr("style");
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"position":"absolute","height": "auto", "width": "520px", "top": "105px", "left": "30%", "display": "block"});
