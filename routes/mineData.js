@@ -9,7 +9,7 @@ exports.imageListing = function(req, res)
 	
 	var imageBody = '';
 	var options = {
-		headers: {'User-Agent': 'nodejs/0.10.22'},
+		headers: {'User-Agent': 'nodejs/0.10.22'},	/* field is required since the headers were getting stripped */
 		host: 'openclipart.org',
 		path:'/search/json/?query='+ req.param("keyword") +'&page=1&amount=20',
 		port: 80,

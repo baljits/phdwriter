@@ -87,7 +87,7 @@ function requestPapers()
 
 //			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-success btn-sm viewButton">View</button>');
-			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3]}, viewModal);
+			$('.searchResultList').children(':last-child').click({url: researchPaperList[index][3], type:"paper"}, viewModal);
 			$('.searchResultList').append('<button type="button" class="btn btn-primary btn-sm citeButton">Cite</button>');
 			$('.searchResultList').children(':last-child').click({paperCitation: researchPaperList[index][4], title: researchPaperList[index][0], author: researchPaperList[index][1], url:researchPaperList[index][3], date:researchPaperList[index][2]}, citation);
 		}
@@ -138,14 +138,15 @@ function imageResults()
 
 }
 
-
-function viewModal(event)
+function renderModal(url, type)
 {
-	console.log("Event " + event.data.url);
 	$('#openPDF').children().remove();
 	//$('#myModal').append('<iframe src="http://arxiv.org/pdf/1307.7440" width="800px" height="600px"></iframe>');
 
-	$('#openPDF').append('<iframe src="'+event.data.url+'" width="500px" height="600px""></iframe>');
+	if(type=="paper")
+		$('#openPDF').append('<iframe src="'+url+'" width="500px" height="600px""></iframe>');
+	else
+		$('#openPDF').append('<img src="'+url+'" width="500px" height="600px""></img>');
 	//$('#myModal').modal('toggle')
 	$("#openPDF").dialog();
 	$("#openPDF").removeAttr("style");
@@ -155,6 +156,12 @@ function viewModal(event)
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"height": "auto", "width": "520px", "top": "105px", "left": "300px", "display": "block"});
 	$(".ui-dialog-titlebar-close").html('<span class="glyphicon glyphicon-remove"></span>');
 	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
+}
+function viewModal(event)
+{
+	console.log("Event " + event.data.url);
+	renderModal(event.data.url, event.data.type);
+	
 }
 
 function imageAdd(event)

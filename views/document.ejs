@@ -46,61 +46,75 @@
 			<span class="glyphicon glyphicon-chevron-left" id="buttonleftspan"></span>
 		</button>
 		<div class="libraryColumn">
+
+			<div class="researchList">Research
+				<% for(var i=0; i<paperCitationUsed.length; i++) { %>
+				<div class="researchPaper" id="paper")>
+					<li><a onclick="renderModal('<%=paperCitationUsed[i].pdfUrl %>', 'paper')"><%=paperCitationUsed[i].title %></a></li>
+				</div> 
+				<% } %> 
+			</div>
+			<div class="imageList">Image
+				<% for(var i=0; i<imagesUsed.length; i++) { %>
+				<div class="image")>
+					<li><a onclick="renderModal('<%=imagesUsed[i].imageThumbUrl %>', 'img')"><%=imagesUsed[i].title %></a></li>
+				</div> 
+				<% } %> 
+			</div>
 		</div>
-	</div>
 
-	<div id="right" class="right">
-		<div id="preview">
-			<div id="showarea"></div>
+		<div id="right" class="right">
+			<div id="preview">
+				<div id="showarea"></div>
+			</div>
+			<div id="rbot"></div>
 		</div>
-		<div id="rbot"></div>
-	</div>
 
-	<div class="searchColumn pull-right">
+		<div class="searchColumn pull-right">
 
-		<div id="rightColumn">
-			<button type="button" class="btn btn-default" id="buttonright" onclick="rightSlider()">
-				<span class="glyphicon glyphicon-chevron-right" id="buttonrightspan"></span>
-				<div id="btntxt2"></div>
-			</button>
+			<div id="rightColumn">
+				<button type="button" class="btn btn-default" id="buttonright" onclick="rightSlider()">
+					<span class="glyphicon glyphicon-chevron-right" id="buttonrightspan"></span>
+					<div id="btntxt2"></div>
+				</button>
 
-			<div id="rightToggle">
-				<div class="btn-group">
-					<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
-					<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
-				</div>
-
-				<div id="article_search">
-					<div class="input-group searchbar">
-						<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
-						<span class="input-group-btn">
-							<button id="paperSearchButton" class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
-						</span>
+				<div id="rightToggle">
+					<div class="btn-group">
+						<button id="articleButton" type="button" class="btn btn-sm btn-default active" onclick="hideImageSearch()">Articles</button>
+						<button id="imageButton" type="button" class="btn btn-sm btn-default" onclick="hideArticleSearch()">Images</button>	
 					</div>
-				</div>
 
-				<div id="image_search" class="conceal">
-					<div class="input-group  searchbar">
-						<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
-						<span class="input-group-btn">
-							<button id="imageSearchButton" class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
-						</span>
+					<div id="article_search">
+						<div class="input-group searchbar">
+							<input type="text" class="form-control" placeholder="Type article name" id="keyword"></input>
+							<span class="input-group-btn">
+								<button id="paperSearchButton" class="btn btn-default pull-right" type="button" onclick="requestPapers()">Search</button>
+							</span>
+						</div>
 					</div>
-				</div>
-				<div class="list-group searchResultList">
-				</div>
 
-				<div id="chatDiv">
-					<div id='chatHistory'>
+					<div id="image_search" class="conceal">
+						<div class="input-group  searchbar">
+							<input type="text" class="form-control pull-left" placeholder="Type image name" id="imageKeyword"></input>
+							<span class="input-group-btn">
+								<button id="imageSearchButton" class="btn btn-default pull-right" type="button" onclick="imageResults()">Search</button>
+							</span>
+						</div>
 					</div>
-					<input type="text" class="form-control" placeholder="Type your message" id="chatInput"></input>
-					<button id='chatSend' class="btn btn-primary" type="button" onclick="sendChatMessage()">Send</button>
-				</div>
-			</div>		
+					<div class="list-group searchResultList">
+					</div>
 
-			<div id="logout"><a href="/logout">Logout</a></div>
+					<div id="chatDiv">
+						<div id='chatHistory'>
+						</div>
+						<input type="text" class="form-control" placeholder="Type your message" id="chatInput"></input>
+						<button id='chatSend' class="btn btn-primary" type="button" onclick="sendChatMessage()">Send</button>
+					</div>
+				</div>		
+
+				<div id="logout"><a href="/logout">Logout</a></div>
+			</div>
 		</div>
-	</div>
 
-</body>
-</html>
+	</body>
+	</html>

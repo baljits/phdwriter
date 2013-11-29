@@ -18,17 +18,20 @@ exports.index = function(req, res){
 
 exports.getDocument = function(req, res){
 	console.log("Requesting for " + req.query.id);
+
 	Library.Project.findOne({'_id':ObjectId(req.query.id)}, function(err, project) {
+	
 		console.log("Found project: " + project + " " + !project);
 		// Checking for malformed URL's
 		if(!project)
 			res.redirect('/error');
 		else{
+			
 			// Checking for authorizaton
 			if(project.collaborators.indexOf(req.user._id) == -1)
 				res.redirect('/error');
 			else
-				res.render('document', { title: 'PhDWriter', documentID: project.id});	
+				res.render('document', { title: 'PhDWriter', documentID: project.id, paperCitationUsed : project.citations, imagesUsed : project.images});	
 		}
 	});	
 };
