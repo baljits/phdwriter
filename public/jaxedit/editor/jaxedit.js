@@ -211,8 +211,6 @@ function initJaxEdit() {
 					wsizes.push([right, rHalfWidth]); hsizes.push([right, halfHeight]);
 
 					right.style.top = 0 + "px";
-					resizer.style.display = "block";
-					rtop.style.display = "block";
 
 					hsizes.push([resizer, halfHeight + 4]);
 					
@@ -229,8 +227,6 @@ function initJaxEdit() {
 					wsizes.push([right, rWrapWidth]); hsizes.push([right, rWrapHeight]);
 
 					right.style.top = (topHeight + halfBorder / 2) + "px";
-					resizer.style.display = "none";
-					rtop.style.display = "none"; 
 
 					adjustSize();
 					that.resizeElements(wsizes, hsizes);
@@ -255,7 +251,6 @@ function initJaxEdit() {
 					wsizes.push([showarea, rWrapWidth - 6]); hsizes.push([showarea, rWrapHeight - 10]);
 
 					wsizes.push([ltop, lWrapWidth - 6]); wsizes.push([lbot, lWrapWidth - 6]);
-					wsizes.push([rtop, rWrapWidth - 6]); 
 				}
 			},
 
