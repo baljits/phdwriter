@@ -46,7 +46,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Projects</a></li>
+				<li ><a href="/">Projects</a></li>
 				<li onclick="leftSlider()"><a>Library</a></li>
 			</ul>
 			<ul id='logoutButton' class="nav navbar-nav navbar-right">
@@ -84,7 +84,6 @@
 					<div id="showarea"></div>
 					<div id="references"><h2>References</h2></div>
 				</div>
-				<div id="rbot"></div>
 			</div>
 		</div>
 	</div>
@@ -94,14 +93,14 @@
 		</button>
 		<div class="researchList">Research
 			<% for(var i=0; i<paperCitationUsed.length; i++) { %>
-			<div class="researchPaper" id="paper")>
+			<div class="researchPaper" id="paper">
 				<li><a onclick="renderModal('<%=paperCitationUsed[i].pdfUrl %>', 'paper')"><%=paperCitationUsed[i].title %></a></li>
 			</div> 
 			<% } %> 
 		</div>
 		<div class="imageList">Image
 			<% for(var i=0; i<imagesUsed.length; i++) { %>
-			<div class="image")>
+			<div class="image">
 				<li><a onclick="renderModal('<%=imagesUsed[i].imageThumbUrl %>', 'img')"><%=imagesUsed[i].title %></a></li>
 			</div> 
 			<% } %> 

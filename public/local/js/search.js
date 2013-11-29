@@ -190,11 +190,15 @@ function imageResults()
 
 function renderModal(url, type)
 {
+	var title = url.substring(url.lastIndexOf('/')+1);
 	$('#openPDF').children().remove();
 	//$('#myModal').append('<iframe src="http://arxiv.org/pdf/1307.7440" width="800px" height="600px"></iframe>');
 
 	if(type=="paper")
+	{
 		$('#openPDF').append('<iframe src="'+url+'" width="500px" height="600px""></iframe>');
+		title += ".pdf";
+	}
 	else
 		$('#openPDF').append('<img src="'+url+'" width="500px" height="600px""></img>');
 	//$('#myModal').modal('toggle')
@@ -203,9 +207,10 @@ function renderModal(url, type)
 	//$("#openPDF").addAttr("style=\"position: absolute; height: auto; width: 600px; top: 0px; left: 525.5px; display: block;\"");
 
 	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").removeAttr("style");
-	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"height": "auto", "width": "520px", "top": "105px", "left": "300px", "display": "block"});
+	$(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css({"position":"absolute","height": "auto", "width": "520px", "top": "105px", "left": "30%", "display": "block"});
 	$(".ui-dialog-titlebar-close").html('<span class="glyphicon glyphicon-remove"></span>');
 	$(".ui-dialog-titlebar-close").css({'padding-bottom': '20px','padding-left': '2px','padding-right': '17px'});
+	$('.ui-dialog-title').html(title);
 }
 function viewModal(event)
 {
