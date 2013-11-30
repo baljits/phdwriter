@@ -298,7 +298,7 @@ function getNewLibrary()
 		data: {_csrf: csrfToken, documentID:documentID},
 	}).done(function(res){
 		//console.log(res.chatHistory + ' ' + res.error);
-		$("#chatHistory").children().remove();
+		//$("#chatHistory").children().remove();
 		if(res.error == 'No error')
 		{
 			imagesCited = new Object();
